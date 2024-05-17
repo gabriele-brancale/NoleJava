@@ -15,7 +15,7 @@ public class BoundaryCliente {
 
 	static Scanner scan = new Scanner(System.in);
 
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
 
 		boolean exit = false;
 
