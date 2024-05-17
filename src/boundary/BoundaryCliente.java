@@ -18,52 +18,49 @@ public class BoundaryCliente {
 	public static void main(String[] args) {	
 
 		boolean exit = false;
-		boolean isvalid = false;
 
-		String op;
+		String in;
 		
 		System.out.println("Bevenuto in NoleJava");
 
 		while(!exit) {
 
-			while (!isvalid) {
+			System.out.println("1. LogIn");
+			System.out.println("2. Registrazione");
+			System.out.println("3. Ricerca Imbarcazioni");
+			System.out.println("4. Esci");
 
-				System.out.println("1. LogIn");
-				System.out.println("2. Registrazione");
-				System.out.println("3. Ricerca Imbarcazioni");
+			in = scan.nextLine();
 
-				op = scan.nextLine();
+			switch (in) {
 
-				switch (op) {
+				case "1":
 
-					case "1":
-
-						//login();
-						break;
+					//login();
+					break;
 					
-					case "2":
+				case "2":
 
-						//registrazione();
-						break;
+					//registrazione();
+					break;
 
-					case "3": 
+				case "3": 
 
-						//ricercaImbarcazioni();
-						break;
+					//ricercaImbarcazioni();
+					break;
 
-					default: 
+				case "4":
 
-						isvalid = false;
-						System.out.println("Opzione non valida");
-						continue;
+					exit = true;
+					System.out.println("Arrivederci!");
+					break;
 
-				}
+				default: 
 
-				isvalid=true;
-				
+					System.out.println("Opzione non valida");
+					continue;
+
 			}
-
-			System.out.println("Arrivederci!");
 
 		}
 	}
