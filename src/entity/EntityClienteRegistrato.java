@@ -1,19 +1,19 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class EntityClienteRegistrato {
 	
-	int idClienteRegistrato;
+	public int idClienteRegistrato;
 
-	String nome;
-	String cognome;
-	String email;
-	String password;
+	public String nome;
+	public String cognome;
+	public String email;
+	public String password;
 	
-	Date dataDiNascita;
+	public Date dataDiNascita;
 
-	String datiPatentente;
+	public String datiPatentente;
 	
 	public EntityClienteRegistrato(int idClienteRegistrato, String nome, String cognome, String email, String password, Date dataDiNascita, 
 									String datiPatente) {

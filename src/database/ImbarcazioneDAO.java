@@ -25,7 +25,7 @@ public class ImbarcazioneDAO {
 			try {
 
 				String query = "SELECT * FROM IMBARCAZIONE WHERE TIPOLOGIA=? AND CAPIENZA>=? AND" 
-                                + "((DATAINIZIO>? AND DATAINIZIO>?) OR (DATAFINE<? AND DATAFINE<?))";
+                                + "((DATAINIZIO>? AND DATAINIZIO>?) OR (DATAFINE<? AND DATAFINE<?));";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 

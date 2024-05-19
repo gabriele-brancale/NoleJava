@@ -1,13 +1,13 @@
 package entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class EntityNoleggio {
     
-    Date dataInizio;
-    Date dataFine;
+    public Date dataInizio;
+    public Date dataFine;
 
-    int idCliente;
-    int idImbarcazione;
+    public int idCliente;
+    public int idImbarcazione;
 
 }

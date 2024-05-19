@@ -16,6 +16,7 @@ public class DBManager {
 			if(conn == null || conn.isClosed()) {
 				//conn = DriverManager.getConnection("jdbc:h2:./gestioneCinema", "sa", "");
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/gestioneCinema", "root", "");
+
 			}
 			
 			return conn;
@@ -26,7 +27,9 @@ public class DBManager {
 	public static void closeConnection() throws SQLException {
 		
 			if(conn != null) {
+
 				conn.close();
+				
 			}
 	}
 
