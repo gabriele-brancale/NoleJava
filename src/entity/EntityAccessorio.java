@@ -2,15 +2,18 @@ package entity;
 
 public class EntityAccessorio {
     
-    boolean obbligatiorio;
+    public boolean obbligatiorio;
 
-    String nome;
-    String descrizione;
+    public int id;
 
-    float prezzo;
+    public String nome;
+    public String descrizione;
 
-    public EntityAccessorio(String nome, String descrizione, float prezzo, boolean obbligatiorio){
+    public float prezzo;
 
+    public EntityAccessorio(int id, String nome, String descrizione, float prezzo, boolean obbligatiorio){
+
+        this.id = id;
         this.nome = nome;
         this.descrizione =descrizione;
         this.prezzo = prezzo;

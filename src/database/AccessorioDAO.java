@@ -22,24 +22,27 @@ public class AccessorioDAO {
 
 			try {
 
-				String query = "SELECT * FROM ACCESSORIO";              // da vedere in base al diagramma delle classi
+				String query = "SELECT * FROM ACCESSORIO_OBBLIGATORIO";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
-
-				//stmt.setString(1, tipologia);
-
-				//stmt.setInt(2, numeroPassegeri);
-
-				//stmt.setDate(3, dataInizio);
-                //stmt.setDate(4, dataFine);
-                //stmt.setDate(5, dataInizio);
-                //stmt.setDate(6, dataFine);
 
 				ResultSet result = stmt.executeQuery();
 
                 while(result.next()){
 
-                    //risultato.add(new EntityImbarcazione(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5), result.getInt(6)));
+                    risultato.add(new EntityAccessorio(result.getInt(1), result.getString(2), result.getString(3), result.getFloat(4), true));
+
+                }
+
+				query = "SELECT * FROM ACCESSORIO_OPTIONAL";
+
+				stmt = conn.prepareStatement(query);
+
+				result = stmt.executeQuery();
+
+                while(result.next()){
+
+                    risultato.add(new EntityAccessorio(result.getInt(1), result.getString(2), result.getString(3), result.getFloat(4), false));
 
                 }
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import entity.EntityAccessorio;
 import entity.EntityNoleggio;
 
 import exception.DAOException;
@@ -19,7 +20,7 @@ public class NoleggioDAO {
 
 			try {
 
-				String query = "INSERT INTO NOLEGGIO VALUES (?, ?, ?, ?);";
+				String query = "INSERT INTO NOLEGGIO VALUES (?, ?, ?, ?, ?, ?);";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
@@ -27,8 +28,23 @@ public class NoleggioDAO {
                 stmt.setDate(2, noleggio.dataFine);
                 stmt.setInt(3, noleggio.idCliente);
                 stmt.setInt(4, noleggio.idImbarcazione);
+				stmt.setInt(5, noleggio.accessorio_obbligatorio.id);
+				stmt.setBoolean(6, noleggio.skipper);
 
 				stmt.executeQuery();
+
+				query = "INSERT INTO NOLEGGIO-ACCESSORIO_OPTIONAL VALUES (?, ?);";
+
+				stmt = conn.prepareStatement(query);
+
+				for (EntityAccessorio accessorio_optional : noleggio.accessori_optional) {
+
+					stmt.setInt(1, noleggio.idCliente);
+					stmt.setInt(2, accessorio_optional.id);
+
+					stmt.executeQuery();
+					
+				}
 
 			}catch(SQLException e) {
 

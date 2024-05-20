@@ -42,7 +42,7 @@ public class ImbarcazioneDAO {
 
                 while(result.next()){
 
-                    risultato.add(new EntityImbarcazione(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5), result.getInt(6)));
+                    risultato.add(new EntityImbarcazione(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getFloat(7)));
 
                 }
 
@@ -65,5 +65,40 @@ public class ImbarcazioneDAO {
 		return risultato; 
 
     }
+
+	public static void impegnaImbarcazione(EntityImbarcazione imbarcazione) throws DAOException, DBConnectionException{
+
+		try {
+
+			Connection conn = DBManager.getConnection();
+
+			try {
+
+				String query = "UPDATE IMBARAZIONE SET STATO=? WHERE ID=?";
+
+				PreparedStatement stmt = conn.prepareStatement(query);
+
+				stmt.setString(1, "dismessa");
+				stmt.setInt(2, imbarcazione.id);
+
+				stmt.executeQuery();
+
+			}catch(SQLException e) {
+
+				throw new DAOException("Errore lettura proiezione");
+
+			}finally {
+
+				DBManager.closeConnection();
+
+			}
+			
+		}catch(SQLException e) {
+            
+			throw new DBConnectionException("Errore di connessione DB");
+
+		}
+
+	}
 
 }
