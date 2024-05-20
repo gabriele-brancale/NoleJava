@@ -4,13 +4,13 @@ public class EntityImbarcazione {
 
     public int id;
 
-    String nome;
-    String targa;
-    String tipologia;
-    String stato;
+    public String nome;
+    public String targa;
+    public String tipologia;
+    public String stato;
 
-    int capienza;
-    float costo;
+    public int capienza;
+    public float costo;
 
     public EntityImbarcazione(int id, String nome, String targa, String tipologia, String stato, int capienza, float costo){
 

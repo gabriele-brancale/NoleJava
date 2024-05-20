@@ -2,11 +2,15 @@ package boundary;
 
 import java.util.Scanner;
 
+import control.GestioneNoleggio;
+
 public class BoundaryCliente {
 
 	static Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
+
+		GestioneNoleggio gN = GestioneNoleggio.getInstance();
 
 		boolean exit = false;
 
