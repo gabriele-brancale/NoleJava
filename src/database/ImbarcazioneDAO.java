@@ -48,7 +48,7 @@ public class ImbarcazioneDAO {
 
 			}catch(SQLException e) {
 
-				throw new DAOException("Errore lettura proiezione");
+				throw new DAOException("Errore lettura imbarcazione");
 
 			}finally {
 
@@ -85,7 +85,7 @@ public class ImbarcazioneDAO {
 
 			}catch(SQLException e) {
 
-				throw new DAOException("Errore lettura proiezione");
+				throw new DAOException("Errore lettura imbarcazione");
 
 			}finally {
 
@@ -100,5 +100,45 @@ public class ImbarcazioneDAO {
 		}
 
 	}
+
+	/*
+	public static boolean verificaImbarcazione(EntityImbarcazione imbarcazione) throws DAOException, DBConnectionException{
+
+		try {
+			
+			Connection conn = DBManager.getConnection();
+
+			try{
+
+				String query = "SELECT * FROM IMBARCAZIONE WHERE ID=?";
+
+				PreparedStatement stmt = conn.prepareStatement(query);
+
+				stmt.setInt(1, imbarcazione.id);
+
+				ResultSet result = stmt.executeQuery();
+
+				if(result.next()){
+
+					return true;
+
+				}
+
+				return false;
+
+			}catch(SQLException e){
+
+				throw new DAOException("Errore lettura imbarcazione");
+
+			}
+			
+		}catch(SQLException e) {
+			
+			throw new DBConnectionException("Errore di connessione DB");
+			
+		}
+
+	}
+	*/
 
 }

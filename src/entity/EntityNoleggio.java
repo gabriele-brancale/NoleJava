@@ -10,7 +10,7 @@ public class EntityNoleggio {
     public Date dataFine;
 
     public int idCliente;
-    public int idImbarcazione;
+    public EntityImbarcazione imbarcazione;
 
     public EntityAccessorio accessorio_obbligatorio;
     public ArrayList<EntityAccessorio> accessori_optional;
