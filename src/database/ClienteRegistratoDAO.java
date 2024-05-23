@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import entity.EntityClienteRegistrato;
 import exception.DAOException;
 import exception.DBConnectionException;

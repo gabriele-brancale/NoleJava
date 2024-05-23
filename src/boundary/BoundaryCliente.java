@@ -1,32 +1,29 @@
 package boundary;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import org.omg.CORBA.SystemException;
-
 import control.GestioneClienti;
 import control.GestioneNoleggio;
+
 import entity.EntityAccessorio;
 import entity.EntityImbarcazione;
-import entity.EntityNoleggio;
+
 import exception.OperationException;
 
 public class BoundaryCliente {
 
 	static Scanner scan = new Scanner(System.in);
 
-	Date dataInizio;
-	Date dataFine;
+	static Date dataInizio;
+	static Date dataFine;
 
-	boolean accesso = false;
+	static boolean accesso = false;
 
-	public void main(String[] args) {
+	public static void main(String[] args) {
 
 		boolean exit = false;
 
@@ -100,7 +97,7 @@ public class BoundaryCliente {
 		}
 	}
 
-	private void noleggiaImbarcazione() throws OperationException{
+	private static void noleggiaImbarcazione() throws OperationException{
 
 		GestioneNoleggio gN = GestioneNoleggio.getInstance();
 		ArrayList<EntityImbarcazione> risultati;
@@ -277,11 +274,11 @@ public class BoundaryCliente {
 
 						opt = opt.toLowerCase();
 
-						if(opt == "n"){
+						if(opt.equals("n")){
 
 							skipper = false;
 
-						}else if(opt != "s"){
+						}else if(opt.equals("s")){
 
 							System.out.println("[!] Errore: Input non valido... Riprovare.");
 
@@ -307,7 +304,7 @@ public class BoundaryCliente {
 
 					opt = opt.toLowerCase();
 
-					if(opt == "s"){
+					if(opt.equals("s")){
 
 						gN.conferma();
 
@@ -333,7 +330,7 @@ public class BoundaryCliente {
 
 						}
 
-					}else if(opt == "n"){
+					}else if(opt.equals("n")){
 
 						System.out.println("[#] Info: Operazione Annullata");
 
@@ -363,7 +360,7 @@ public class BoundaryCliente {
 
 	}
 
-	private ArrayList<EntityImbarcazione> ricercaImbarcazioni() throws OperationException{
+	private static ArrayList<EntityImbarcazione> ricercaImbarcazioni() throws OperationException{
 
 		GestioneNoleggio gN = GestioneNoleggio.getInstance();
 		ArrayList<EntityImbarcazione> risultato;
@@ -378,11 +375,11 @@ public class BoundaryCliente {
 			System.out.println("\t1. A vela");
 			System.out.println("\t2. A motore");
 
-			System.out.println("Inserire l'opzione: ");
+			System.out.print("Inserire l'opzione: ");
 
 			tipologia = scan.nextLine();
 
-			if(tipologia == "1" || tipologia == "2"){
+			if(tipologia.equals("1") || tipologia.equals("2")){
 
 				break;
 
@@ -415,7 +412,7 @@ public class BoundaryCliente {
 
 			try{
 
-				System.out.print("Inserire la data di inzio del nolggio [aaaa/mm/gg]: ");
+				System.out.print("Inserire la data di inzio del nolggio [aaaa-mm-gg]: ");
 
 				dataInizio = Date.valueOf(scan.nextLine());
 
@@ -463,7 +460,7 @@ public class BoundaryCliente {
 
 	}
 
-	private void login() throws OperationException{
+	private static void login() throws OperationException{
 
 		GestioneClienti gC = GestioneClienti.getInstance();
 		String email;
@@ -531,7 +528,7 @@ public class BoundaryCliente {
 
 	}
 
-	private void registrazione() throws OperationException{
+	private static void registrazione() throws OperationException{
 
 		GestioneClienti gC = GestioneClienti.getInstance();
 		String nome;
@@ -642,7 +639,7 @@ public class BoundaryCliente {
 
 				scelta = scelta.toLowerCase();
 
-				if(scelta == "s"){
+				if(scelta.equals("s")){
 
 					while(true){
 
@@ -662,7 +659,7 @@ public class BoundaryCliente {
 		
 					}
 
-				}else if(scelta == "n"){
+				}else if(scelta.equals("n")){
 
 					numeroPatente = null;
 

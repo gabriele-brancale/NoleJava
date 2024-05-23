@@ -24,7 +24,7 @@ public class ImbarcazioneDAO {
 
 			try {
 
-				String query = "SELECT * FROM IMBARCAZIONE WHERE TIPOLOGIA=? AND CAPIENZA>=? AND" 
+				String query = "SELECT * FROM IMBARCAZIONE JOIN NOLEGGIO ON IMBARCAZIONE.TARGA=NOLEGGIO.TARGA WHERE TIPOLOGIA=? AND CAPIENZA>=? AND" 
                                 + "((DATAINIZIO>? AND DATAINIZIO>?) OR (DATAFINE<? AND DATAFINE<?));";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
@@ -74,12 +74,12 @@ public class ImbarcazioneDAO {
 
 			try {
 
-				String query = "UPDATE IMBARAZIONE SET STATO=? WHERE ID=?";
+				String query = "UPDATE IMBARAZIONE SET STATO=? WHERE TARGA=?";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
 				stmt.setString(1, "dismessa");
-				stmt.setInt(2, imbarcazione.id);
+				stmt.setString(2, imbarcazione.targa);
 
 				stmt.executeQuery();
 

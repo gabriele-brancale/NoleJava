@@ -2,24 +2,20 @@ package control;
 
 
 import java.sql.Date;
-import java.sql.Time;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
 
-import org.omg.CORBA.TIMEOUT;
+import java.util.ArrayList;
 
 import database.AccessorioDAO;
-import database.ClienteRegistratoDAO;
 import database.ImbarcazioneDAO;
 import database.NoleggioDAO;
+
 import entity.EntityAccessorio;
-import entity.EntityClienteRegistrato;
 import entity.EntityImbarcazione;
 import entity.EntityNoleggio;
+
 import exception.DAOException;
 import exception.DBConnectionException;
 import exception.OperationException;

@@ -2,10 +2,8 @@ package entity;
 
 public class EntityImbarcazione {
 
-    public int id;
-
-    public String nome;
     public String targa;
+    public String nome;
     public String tipologia;
     public String stato;
 

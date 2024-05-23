@@ -27,7 +27,7 @@ public class NoleggioDAO {
 				stmt.setDate(1, noleggio.dataInizio);
                 stmt.setDate(2, noleggio.dataFine);
                 stmt.setInt(3, noleggio.idCliente);
-                stmt.setInt(4, noleggio.imbarcazione.id);
+                stmt.setString(4, noleggio.imbarcazione.targa);
 				stmt.setInt(5, noleggio.accessorioObbligatorio.id);
 				stmt.setBoolean(6, noleggio.skipper);
 
