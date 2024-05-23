@@ -28,7 +28,7 @@ public class NoleggioDAO {
                 stmt.setDate(2, noleggio.dataFine);
                 stmt.setInt(3, noleggio.idCliente);
                 stmt.setInt(4, noleggio.imbarcazione.id);
-				stmt.setInt(5, noleggio.accessorio_obbligatorio.id);
+				stmt.setInt(5, noleggio.accessorioObbligatorio.id);
 				stmt.setBoolean(6, noleggio.skipper);
 
 				stmt.executeQuery();
@@ -37,7 +37,7 @@ public class NoleggioDAO {
 
 				stmt = conn.prepareStatement(query);
 
-				for (EntityAccessorio accessorio_optional : noleggio.accessori_optional) {
+				for (EntityAccessorio accessorio_optional : noleggio.accessoriOptional) {
 
 					stmt.setInt(1, noleggio.idCliente);
 					stmt.setInt(2, accessorio_optional.id);

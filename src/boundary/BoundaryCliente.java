@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import org.omg.CORBA.SystemException;
+
+import control.GestioneClienti;
 import control.GestioneNoleggio;
 import entity.EntityAccessorio;
 import entity.EntityImbarcazione;
@@ -17,6 +20,11 @@ import exception.OperationException;
 public class BoundaryCliente {
 
 	static Scanner scan = new Scanner(System.in);
+
+	Date dataInizio;
+	Date dataFine;
+
+	boolean accesso = false;
 
 	public void main(String[] args) {
 
@@ -42,12 +50,12 @@ public class BoundaryCliente {
 
 					case "1":
 
-						//login();
+						login();
 						break;
 						
 					case "2":
 
-						//registrazione();
+						registrazione();
 						break;
 
 					case "3": 
@@ -98,6 +106,7 @@ public class BoundaryCliente {
 		ArrayList<EntityImbarcazione> risultati;
 		EntityImbarcazione imbarcazioneScelta;
 		ArrayList<EntityAccessorio> listaAccessori;
+		boolean skipper = true;
 
 		try {
 
@@ -119,6 +128,8 @@ public class BoundaryCliente {
 
 				while(true){
 
+					System.out.print("Inserire l'imbaracazione che si desidera: ");
+
 					scelta = scan.nextInt();
 
 					if(scelta <= 0 || scelta >= risultati.size()){
@@ -137,13 +148,13 @@ public class BoundaryCliente {
 				listaAccessori = gN.getAccessori();
 
 				System.out.println("Accessori: ");
-				System.out.println("\t Obbligatori:");
+				System.out.println("\tObbligatori:");
 
 				for (int i = 0; i < listaAccessori.size(); i++) {
 
 					if(!listaAccessori.get(i).obbligatiorio){
 
-						System.out.println("\t Optional:");
+						System.out.println("\tOptional:");
 
 						for(; i < listaAccessori.size(); i++){
 
@@ -222,7 +233,121 @@ public class BoundaryCliente {
 
 				}
 
-				// da continure
+				if(accesso == false){
+
+					System.out.println("Non hai effettuato l'accesso, per continuare e' necessario un account: ");
+					System.out.println("\t 1. Login");
+					System.out.println("\t 2. Registrazione");
+
+					while(true){
+
+						System.out.println("Inserire l'opzione: ");
+
+						scelta = scan.nextInt();		// ******************** gestire il caso in cui non viene inserito un numero ovunque ci sia uno scan.nextInt()
+
+						if(scelta == 1){
+
+							login();
+							break;
+	
+						}else if(scelta == 2){
+	
+							registrazione();
+							break;
+	
+						}else{
+
+							System.out.println("[!] Errore: Input non valido");
+
+						}
+
+					}
+
+				}
+
+				GestioneClienti gC = GestioneClienti.getInstance();
+
+				if(gC.verificaPatente()){
+
+					while(true){
+
+						System.out.println("Si desidera uno skipper? (avra' un costo aggiuntivo di 50euro al giorno) [s/n]: ");
+
+						String opt = scan.nextLine();
+
+						opt = opt.toLowerCase();
+
+						if(opt == "n"){
+
+							skipper = false;
+
+						}else if(opt != "s"){
+
+							System.out.println("[!] Errore: Input non valido... Riprovare.");
+
+							continue;
+
+						}
+
+						break;
+					
+					}
+
+				}
+
+				float costo = gN.checkout(dataInizio, dataFine, imbarcazioneScelta, listaAccessori, skipper);
+
+				System.out.println("[#] Info: Il costo totale del noleggio e': " + costo);
+
+				while(true){
+
+					System.out.print("Confermare l'operazione di noleggio [s/n]: ");
+
+					String opt = scan.nextLine();
+
+					opt = opt.toLowerCase();
+
+					if(opt == "s"){
+
+						gN.conferma();
+
+						String numeroCarta;
+
+						while(true){
+
+							System.out.print("Inserire il numero della carta di credito: ");
+
+							numeroCarta = scan.nextLine();
+
+							if(numeroCarta.matches("^\\d{16}$")){
+
+								break;
+
+							}
+
+						}
+
+						if(gN.effettuaPagamento(numeroCarta)){
+
+							
+
+						}
+
+					}else if(opt == "n"){
+
+						System.out.println("[#] Info: Operazione Annullata");
+
+					}else{
+
+						System.out.println("[!] Errore: Input non valido... Riprovare");
+
+						continue;
+
+					}
+
+					return;
+
+				}
 
 			}else{
 
@@ -252,6 +377,8 @@ public class BoundaryCliente {
 			System.out.println("Scegliere la tipologia:");
 			System.out.println("\t1. A vela");
 			System.out.println("\t2. A motore");
+
+			System.out.println("Inserire l'opzione: ");
 
 			tipologia = scan.nextLine();
 
@@ -288,7 +415,7 @@ public class BoundaryCliente {
 
 			try{
 
-				System.out.print("Inserisci la data di inzio del nolggio [aaaa/mm/gg]: ");
+				System.out.print("Inserire la data di inzio del nolggio [aaaa/mm/gg]: ");
 
 				dataInizio = Date.valueOf(scan.nextLine());
 
@@ -307,7 +434,7 @@ public class BoundaryCliente {
 
 			try{
 
-				System.out.print("Inserisci la data di fine del nolggio [aaaa-mm-gg]: ");
+				System.out.print("Inserire la data di fine del nolggio [aaaa-mm-gg]: ");
 
 				dataFine = Date.valueOf(scan.nextLine());
 
@@ -336,21 +463,240 @@ public class BoundaryCliente {
 
 	}
 
-	private float calcolaCosto(EntityNoleggio noleggio){
+	private void login() throws OperationException{
 
-		float prezzoAccessori = noleggio.accessorio_obbligatorio.prezzo;
+		GestioneClienti gC = GestioneClienti.getInstance();
+		String email;
+		String password;
 
-		for (EntityAccessorio accessorio : noleggio.accessori_optional) {
+		while(true){
 
-			prezzoAccessori += accessorio.prezzo;
+			while(true){
+
+				System.out.print("Inserire l'indirizzo email: ");
+
+				email = scan.nextLine();
+
+				// controllare anche la lunghezza
+
+				if(email.contains("@") && email.contains(".")){		// altrimenti utilizzare l'espressione regolare  /^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/
+
+					break;
+
+				}else{
+				
+					System.out.println("[!] Errore: Input non valido... Riprovare");
+
+				}
 			
+			}
+
+			while(true){
+
+				System.out.print("Inserire la password: ");
+
+				password = scan.nextLine();
+
+				// controllare la lunghezza
+
+				if(true /* lunghezza giusta */){
+
+					break;
+
+				}
+
+			}
+
+			try {
+
+				accesso = gC.login(email, password);
+
+				if(accesso == true){
+
+					System.out.println("[#] Info: Login effettuato");
+		
+					break;
+
+				}
+
+				System.out.println("[#] Info: Login fallito... Email o password non corretti, riprovare");
+
+			} catch (OperationException e) {
+				
+				throw e;
+
+			}
+		
 		}
 
-		long giorniPrenotati = ChronoUnit.DAYS.between(LocalDate.parse(noleggio.dataFine.toString()),LocalDate.parse(noleggio.dataInizio.toString()));
+	}
 
-		float costo = ((noleggio.imbarcazione.costo /*+ costo skipper*/) * giorniPrenotati) + prezzoAccessori;
+	private void registrazione() throws OperationException{
 
-		return costo;
+		GestioneClienti gC = GestioneClienti.getInstance();
+		String nome;
+		String cognome;
+		String email;
+		String password;
+		Date dataDiNascita;
+		String numeroPatente;
+
+		while(true){
+
+			while(true){
+
+				System.out.print("Inserire il nome: ");
+
+				nome = scan.nextLine();
+
+				if(nome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
+
+					break;
+
+				}else{
+
+					System.out.println("[!] Errore: Input non valido... Riprovare");
+
+				}
+
+			}
+
+			while(true){
+
+				System.out.print("Inserire il cognome: ");
+
+				cognome = scan.nextLine();
+
+				if(nome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
+
+					break;
+
+				}else{
+
+					System.out.println("[!] Errore: Input non valido... Riprovare");
+
+				}
+
+			}
+
+			while(true){
+
+				System.out.print("Inserire l'indirizzo email: ");
+
+				email = scan.nextLine();
+
+				// controllare anche la lunghezza
+
+				if(email.contains("@") && email.contains(".")){		// altrimenti utilizzare l'espressione regolare  /^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/
+
+					break;
+
+				}else{
+				
+					System.out.println("[!] Errore: Input non valido... Riprovare");
+
+				}
+			
+			}
+
+			while(true){
+
+				System.out.print("Inserire la password: ");
+
+				password = scan.nextLine();
+
+				// controllare la lunghezza
+
+				if(true /* lunghezza giusta */){
+
+					break;
+
+				}
+
+			}
+
+			while(true){
+
+				try{
+
+					System.out.print("Inserire la data di nascita [aaaa/mm/gg]: ");
+
+					dataDiNascita = Date.valueOf(scan.nextLine());
+
+				}catch(IllegalArgumentException e){
+
+					System.out.println("[!] Errore: Input non valido... Riprovare.");
+					continue;
+
+				}
+
+				break;
+
+			}
+
+			while(true){
+
+				System.out.println("Si possiede una patente? [s/n]: ");
+
+				String scelta = scan.nextLine();
+
+				scelta = scelta.toLowerCase();
+
+				if(scelta == "s"){
+
+					while(true){
+
+						System.out.print("Inserire il numero di patente: ");
+		
+						numeroPatente = scan.nextLine().toUpperCase();
+		
+						if(numeroPatente.length() <= 10 && numeroPatente.length() >= 7 && numeroPatente.substring(0, 2).matches("[a-zA-Z]+") && numeroPatente.substring(2, numeroPatente.length()).matches( "\\d+")){
+		
+							break;
+		
+						}else{
+		
+							System.out.println("[!] Errore: Input non valido... Riprovare.");
+		
+						}
+		
+					}
+
+				}else if(scelta == "n"){
+
+					numeroPatente = null;
+
+					break;
+
+				}else{
+
+					System.out.println("[!] Errore: Input non valido... Riprovare");
+
+				}
+
+			}
+
+			try {
+
+				if(gC.registrazione(nome, cognome, email, password, dataDiNascita, numeroPatente)){
+
+					accesso = true;
+
+					break;
+
+				}else{
+
+					System.out.println("[!] Errore: Esiste gia' un account con questa email... Riprovare");
+
+				}
+
+			}catch(OperationException e){
+
+				throw e;
+
+			}
+
+		}
 
 	}
 

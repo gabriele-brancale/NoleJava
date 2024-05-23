@@ -12,9 +12,20 @@ public class EntityNoleggio {
     public int idCliente;
     public EntityImbarcazione imbarcazione;
 
-    public EntityAccessorio accessorio_obbligatorio;
-    public ArrayList<EntityAccessorio> accessori_optional;
+    public EntityAccessorio accessorioObbligatorio;
+    public ArrayList<EntityAccessorio> accessoriOptional;
 
     public boolean skipper;
+
+    public EntityNoleggio(Date dataInizio, Date dataFine, int idCliente, EntityImbarcazione imbarcazione, EntityAccessorio accessorioObbligatorio, ArrayList<EntityAccessorio> accessoriOptional, boolean skipper){
+
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+        this.idCliente = idCliente;
+        this.imbarcazione = imbarcazione;
+        this.accessorioObbligatorio = accessorioObbligatorio;
+        this.accessoriOptional = accessoriOptional;
+
+    }
 
 }
