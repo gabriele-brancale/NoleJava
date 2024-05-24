@@ -128,6 +128,7 @@ public class BoundaryCliente {
 					System.out.print("Inserire l'imbaracazione che si desidera: ");
 
 					scelta = scan.nextInt();
+					scan.nextLine();
 
 					if(scelta <= 0 || scelta >= risultati.size()){
 
@@ -241,6 +242,7 @@ public class BoundaryCliente {
 						System.out.println("Inserire l'opzione: ");
 
 						scelta = scan.nextInt();		// ******************** gestire il caso in cui non viene inserito un numero ovunque ci sia uno scan.nextInt()
+						scan.nextLine();
 
 						if(scelta == 1){
 
@@ -396,6 +398,7 @@ public class BoundaryCliente {
 			System.out.print("Inserie il numero dei passeggeri: ");
 
 			numeroPassegeri = scan.nextInt();
+			scan.nextLine();
 
 			if(numeroPassegeri <= 0){
 
@@ -410,11 +413,13 @@ public class BoundaryCliente {
 
 		while(true){
 
+			System.out.print("Inserire la data di inzio del nolggio [aaaa-mm-gg]: ");
+
 			try{
+				
+				String data = scan.nextLine();
 
-				System.out.print("Inserire la data di inzio del nolggio [aaaa-mm-gg]: ");
-
-				dataInizio = Date.valueOf(scan.nextLine());
+				dataInizio = Date.valueOf(data);
 
 			}catch(IllegalArgumentException e){
 

@@ -18,7 +18,7 @@ public class ClienteRegistratoDAO {
 
 			Connection conn = DBManager.getConnection();
 
-			String query = "SELECT * FROM CLIENTEREGISTRATO WHERE EMAIL=? AND PASSWORD=?;";
+			String query = "SELECT * FROM CLIENTE_REGISTRATO WHERE EMAIL=? AND PASSWORD=?;";
 
 			try {
 
@@ -61,7 +61,7 @@ public class ClienteRegistratoDAO {
 
 			Connection conn = DBManager.getConnection();
 
-			String query = "INSERT INTO CLIENTEREGISTRATO VALUES (?, ?, ?, ?, ?, ?);";
+			String query = "INSERT INTO CLIENTE_REGISTRATO VALUES (?, ?, ?, ?, ?, ?);";
 
 			try {
 
