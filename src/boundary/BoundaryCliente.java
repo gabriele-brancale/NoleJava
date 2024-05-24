@@ -1,7 +1,7 @@
 package boundary;
 
 import java.sql.Date;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -429,6 +429,7 @@ public class BoundaryCliente {
 
 				dataInizio = Date.valueOf(data);
 
+
 			}catch(IllegalArgumentException e){
 
 				System.out.println("[!] Errore: Input non valido... Riprovare.");
@@ -436,7 +437,11 @@ public class BoundaryCliente {
 
 			}
 
-			break;
+			if(Date.valueOf(LocalDate.now()).before(dataInizio) || Date.valueOf(LocalDate.now()).equals(dataInizio)){
+
+				break;
+
+			}
 
 		}
 
@@ -455,7 +460,11 @@ public class BoundaryCliente {
 
 			}
 
-			break;
+			if(Date.valueOf(LocalDate.now()).before(dataFine) || Date.valueOf(LocalDate.now()).equals(dataFine)){
+
+				break;
+
+			}
 
 		}
 
