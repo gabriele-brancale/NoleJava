@@ -24,8 +24,8 @@ public class ImbarcazioneDAO {
 
 			try {
 
-				String query = "SELECT * FROM IMBARCAZIONE JOIN NOLEGGIO ON IMBARCAZIONE.TARGA=NOLEGGIO.TARGA WHERE TIPOLOGIA=? AND CAPIENZA>=? AND" 
-                                + "((DATAINIZIO>? AND DATAINIZIO>?) OR (DATAFINE<? AND DATAFINE<?));";
+				String query = "SELECT * FROM IMBARCAZIONE JOIN NOLEGGIO ON IMBARCAZIONE.TARGA=NOLEGGIO.TARGA WHERE TIPOLOGIA=? AND CAPIENZA>=? AND " 
+                                + "((DATA_INIZIO>? AND DATA_INIZIO>?) OR (DATA_FINE<? AND DATA_FINE<?));";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
@@ -42,7 +42,7 @@ public class ImbarcazioneDAO {
 
                 while(result.next()){
 
-                    risultato.add(new EntityImbarcazione(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getFloat(7)));
+                    risultato.add(new EntityImbarcazione(result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getFloat(7)));
 
                 }
 

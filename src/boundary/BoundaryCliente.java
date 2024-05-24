@@ -109,17 +109,17 @@ public class BoundaryCliente {
 
 			risultati = ricercaImbarcazioni();
 
-			System.out.println("Imbarcazioni disponibili:");
-
-			for (int i = 0; i < risultati.size(); i++) {
-
-				System.out.println("\t" + (i+1) + ". " + risultati.get(i).nome + ":");
-				System.out.println("\t\tCapienza: " + risultati.get(i).capienza);
-				System.out.println("\t\tCosto: " + risultati.get(i).costo);
-				
-			}
-
 			if(risultati.size() > 0){
+
+				System.out.println("Imbarcazioni disponibili:");
+
+				for (int i = 0; i < risultati.size(); i++) {
+
+					System.out.println("\t" + (i+1) + ". " + risultati.get(i).nome + ":");
+					System.out.println("\t\tCapienza: " + risultati.get(i).capienza);
+					System.out.println("\t\tCosto: " + risultati.get(i).costo);
+					
+				}
 
 				int scelta;
 
@@ -381,15 +381,23 @@ public class BoundaryCliente {
 
 			tipologia = scan.nextLine();
 
-			if(tipologia.equals("1") || tipologia.equals("2")){
+			if(tipologia.equals("1")){
 
-				break;
+				tipologia = "vela";
+
+			}else if(tipologia.equals("2")){
+
+				tipologia = "motore";
 
 			}else{
 
 				System.out.println("[!] Errore: Input non valido... Riprovare.");
+				
+				continue;
 
 			}
+
+			break;
 
 		}
 
