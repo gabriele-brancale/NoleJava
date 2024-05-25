@@ -130,7 +130,7 @@ public class BoundaryCliente {
 					scelta = scan.nextInt();
 					scan.nextLine();
 
-					if(scelta <= 0 || scelta >= risultati.size()){
+					if(scelta <= 0 || scelta > risultati.size()){
 
 						System.out.println("[!] Errore: Input non valido... Riprovare.");
 						continue;
@@ -141,7 +141,7 @@ public class BoundaryCliente {
 					
 				}
 
-				imbarcazioneScelta = risultati.get(scelta);
+				imbarcazioneScelta = risultati.get(scelta-1);
 
 				listaAccessori = gN.getAccessori();
 
@@ -156,9 +156,9 @@ public class BoundaryCliente {
 
 						for(; i < listaAccessori.size(); i++){
 
-							System.out.println("\t" + (i+1) + ". " + listaAccessori.get(i).nome + ":");
-							System.out.println("\t\tCapienza: " + listaAccessori.get(i).descrizione);
-							System.out.println("\t\tCosto: " + listaAccessori.get(i).prezzo);
+							System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).nome + ":");
+							System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).descrizione);
+							System.out.println("\t\t\tCosto: " + listaAccessori.get(i).prezzo);
 
 						}
 
@@ -166,9 +166,9 @@ public class BoundaryCliente {
 
 					}
 
-					System.out.println("\t" + (i+1) + ". " + listaAccessori.get(i).nome + ":");
-					System.out.println("\t\tCapienza: " + listaAccessori.get(i).descrizione);
-					System.out.println("\t\tCosto: " + listaAccessori.get(i).prezzo);
+					System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).nome + ":");
+					System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).descrizione);
+					System.out.println("\t\t\tCosto: " + listaAccessori.get(i).prezzo);
 					
 				}
 
@@ -192,7 +192,7 @@ public class BoundaryCliente {
 
 							}else{
 
-								if(listaAccessori.get(accessorio).obbligatiorio){
+								if(listaAccessori.get(accessorio-1).obbligatiorio){
 
 									if(obbligatiorioScelto){
 
@@ -211,15 +211,23 @@ public class BoundaryCliente {
 
 						}
 
+						if(!obbligatiorioScelto){
+
+							throw new Exception("Piu' di un obbligatorio selezionato");
+
+						}
+
 						for (int i = 0; i < listaAccessori.size(); i++) {
 
-							if(!accessoriScelti.contains(Integer.toString(i))){
+							if(!accessoriScelti.contains(Integer.toString(i+1))){
 
-								listaAccessori.remove(i);
+								listaAccessori.set(i, null);
 
 							}
 							
 						}
+
+						listaAccessori.removeIf(e -> e == null);
 
 						break;
 					
@@ -280,7 +288,7 @@ public class BoundaryCliente {
 
 							skipper = false;
 
-						}else if(opt.equals("s")){
+						}else if(!opt.equals("s")){
 
 							System.out.println("[!] Errore: Input non valido... Riprovare.");
 
@@ -334,6 +342,8 @@ public class BoundaryCliente {
 
 					}else if(opt.equals("n")){
 
+						gN.annullaNoleggio();
+
 						System.out.println("[#] Info: Operazione Annullata");
 
 					}else{
@@ -368,8 +378,6 @@ public class BoundaryCliente {
 		ArrayList<EntityImbarcazione> risultato;
 		String tipologia = null;
 		int numeroPassegeri;
-		Date dataInizio;
-		Date dataFine;
 
 		while(true){
 
@@ -421,51 +429,68 @@ public class BoundaryCliente {
 
 		while(true){
 
-			System.out.print("Inserire la data di inzio del nolggio [aaaa-mm-gg]: ");
+			while(true){
 
-			try{
-				
-				String data = scan.nextLine();
+				System.out.print("Inserire la data di inzio del noleggio [aaaa-mm-gg]: ");
 
-				dataInizio = Date.valueOf(data);
+				try{
+					
+					String data = scan.nextLine();
 
+					dataInizio = Date.valueOf(data);
 
-			}catch(IllegalArgumentException e){
+					if(Date.valueOf(LocalDate.now()).after(dataInizio)){
 
-				System.out.println("[!] Errore: Input non valido... Riprovare.");
-				continue;
+						throw new IllegalArgumentException();
 
-			}
+					}
 
-			if(Date.valueOf(LocalDate.now()).before(dataInizio) || Date.valueOf(LocalDate.now()).equals(dataInizio)){
+				}catch(IllegalArgumentException e){
 
-				break;
+					System.out.println("[!] Errore: Input non valido... Riprovare.");
+					continue;
 
-			}
-
-		}
-
-		while(true){
-
-			try{
-
-				System.out.print("Inserire la data di fine del nolggio [aaaa-mm-gg]: ");
-
-				dataFine = Date.valueOf(scan.nextLine());
-
-			}catch(IllegalArgumentException e){
-
-				System.out.println("[!] Errore: Input non valido... Riprovare.");
-				continue;
-
-			}
-
-			if(Date.valueOf(LocalDate.now()).before(dataFine) || Date.valueOf(LocalDate.now()).equals(dataFine)){
+				}
 
 				break;
 
 			}
 
+			while(true){
+
+				try{
+
+					System.out.print("Inserire la data di fine del nolggio [aaaa-mm-gg]: ");
+
+					dataFine = Date.valueOf(scan.nextLine());
+
+					if(Date.valueOf(LocalDate.now()).after(dataFine)){
+
+						throw new IllegalArgumentException();
+
+					}
+
+				}catch(IllegalArgumentException e){
+
+					System.out.println("[!] Errore: Input non valido... Riprovare.");
+					continue;
+
+				}
+
+				break;
+
+			}
+
+			if(dataInizio.after(dataFine)){
+
+				System.out.print("[!] Errore: Input non valido... Riprovare");
+
+				continue;
+
+			}
+
+			break;
+		
 		}
 
 		try{

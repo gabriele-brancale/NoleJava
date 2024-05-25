@@ -74,7 +74,7 @@ public class ClienteRegistratoDAO {
 				stmt.setDate(5, dataDiNascita);
 				stmt.setString(6, numeroPatente);
 
-				stmt.executeQuery();
+				stmt.executeUpdate();
 
 				stmt = conn.prepareStatement("LAST_INSERT_ID()");
 

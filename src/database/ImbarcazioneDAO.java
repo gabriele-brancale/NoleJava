@@ -24,25 +24,22 @@ public class ImbarcazioneDAO {
 
 			try {
 
-				String query = "SELECT * FROM IMBARCAZIONE JOIN NOLEGGIO ON IMBARCAZIONE.TARGA=NOLEGGIO.TARGA WHERE TIPOLOGIA=? AND CAPIENZA>=? AND " 
-                                + "((DATA_INIZIO>? AND DATA_INIZIO>?) OR (DATA_FINE<? AND DATA_FINE<?));";
+				String query = "SELECT * FROM IMBARCAZIONE i LEFT JOIN NOLEGGIO n ON i.TARGA = N.TARGA"
+							+ " AND n.DATA_INIZIO<? AND n.DATA_FINE>? WHERE n.targa IS NULL AND TIPOLOGIA=? AND CAPIENZA>=?;";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
-				stmt.setString(1, tipologia);
+				stmt.setDate(1, dataFine);
+				stmt.setDate(2, dataInizio);
 
-				stmt.setInt(2, numeroPassegeri);
-
-				stmt.setDate(3, dataInizio);
-                stmt.setDate(4, dataFine);
-                stmt.setDate(5, dataInizio);
-                stmt.setDate(6, dataFine);
+				stmt.setString(3, tipologia);
+                stmt.setInt(4, numeroPassegeri);
 
 				ResultSet result = stmt.executeQuery();
 
                 while(result.next()){
 
-                    risultato.add(new EntityImbarcazione(result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getInt(6), result.getFloat(7)));
+                    risultato.add(new EntityImbarcazione(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5), result.getFloat(6)));
 
                 }
 
@@ -74,14 +71,14 @@ public class ImbarcazioneDAO {
 
 			try {
 
-				String query = "UPDATE IMBARAZIONE SET STATO=? WHERE TARGA=?";
+				String query = "UPDATE IMBARCAZIONE SET STATO=? WHERE TARGA=?";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
-				stmt.setString(1, "dismessa");
+				stmt.setString(1, "DISMESSA");
 				stmt.setString(2, imbarcazione.targa);
 
-				stmt.executeQuery();
+				stmt.executeUpdate();
 
 			}catch(SQLException e) {
 
@@ -101,44 +98,39 @@ public class ImbarcazioneDAO {
 
 	}
 
-	/*
-	public static boolean verificaImbarcazione(EntityImbarcazione imbarcazione) throws DAOException, DBConnectionException{
+	public static void disimpegnaImbarcazione(EntityImbarcazione imbarcazione) throws DAOException, DBConnectionException{
 
 		try {
-			
+
 			Connection conn = DBManager.getConnection();
 
-			try{
+			try {
 
-				String query = "SELECT * FROM IMBARCAZIONE WHERE ID=?";
+				String query = "UPDATE IMBARCAZIONE SET STATO=? WHERE TARGA=?";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
-				stmt.setInt(1, imbarcazione.id);
+				stmt.setString(1, "IN USO");
+				stmt.setString(2, imbarcazione.targa);
 
-				ResultSet result = stmt.executeQuery();
+				stmt.executeUpdate();
 
-				if(result.next()){
-
-					return true;
-
-				}
-
-				return false;
-
-			}catch(SQLException e){
+			}catch(SQLException e) {
 
 				throw new DAOException("Errore lettura imbarcazione");
+
+			}finally {
+
+				DBManager.closeConnection();
 
 			}
 			
 		}catch(SQLException e) {
-			
+            
 			throw new DBConnectionException("Errore di connessione DB");
-			
+
 		}
 
 	}
-	*/
 
 }

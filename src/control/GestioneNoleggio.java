@@ -84,7 +84,9 @@ public class GestioneNoleggio {
 
 		GestioneClienti gC = GestioneClienti.getInstance();
 
-		noleggio = new EntityNoleggio(dataInizio, dataFine, gC.getClienteRegistrato().idClienteRegistrato, imbarcazione, listaAccessori.get(0), new ArrayList<EntityAccessorio>(listaAccessori.subList(1, listaAccessori.size())), skipper);
+		EntityAccessorio obbligatorio = listaAccessori.remove(0);
+
+		noleggio = new EntityNoleggio(dataInizio, dataFine, gC.getClienteRegistrato().idClienteRegistrato, imbarcazione, obbligatorio, listaAccessori, skipper);
 
 		return calcolaCosto(noleggio);
 
@@ -103,6 +105,12 @@ public class GestioneNoleggio {
 			throw e;
 
 		}
+
+	}
+
+	public void annullaNoleggio(){
+
+		noleggio = null;
 
 	}
 
@@ -130,7 +138,7 @@ public class GestioneNoleggio {
 
 		} catch (OperationException e) {
 
-			System.out.print("Qualcosa e' andato storto durante la registrazione del noleggio, rimborso in corso...");
+			System.out.println("[#] Info: Qualcosa e' andato storto durante la registrazione del noleggio, rimborso in corso...");
 
 			try {
 
@@ -138,11 +146,13 @@ public class GestioneNoleggio {
 
 			} catch (InterruptedException e1) {}
 
-			System.out.print("Rimborso effettuato");
+			System.out.println("[#] Info: Rimborso effettuato");
 			
 			throw e;
 
 		}
+
+		disimpegnaImbarcazione(noleggio.imbarcazione);
 
 		return true;
 
@@ -184,6 +194,24 @@ public class GestioneNoleggio {
 
 	}
 
+	private void disimpegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
+
+		try{
+
+			ImbarcazioneDAO.impegnaImbarcazione(imbarcazione);
+
+		}catch(DBConnectionException e){
+
+			throw new OperationException("[!] Errore: Riscontrato un problema interno");
+
+		}catch(DAOException e){
+
+			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+
+		}
+
+	}
+
 	private float calcolaCosto(EntityNoleggio noleggio){
 
 		float prezzoAccessori = noleggio.accessorioObbligatorio.prezzo;
@@ -194,7 +222,7 @@ public class GestioneNoleggio {
 			
 		}
 
-		long giorniPrenotati = ChronoUnit.DAYS.between(LocalDate.parse(noleggio.dataFine.toString()),LocalDate.parse(noleggio.dataInizio.toString()));
+		long giorniPrenotati = ChronoUnit.DAYS.between(LocalDate.parse(noleggio.dataInizio.toString()),LocalDate.parse(noleggio.dataFine.toString()));
 
 		float costo = ((noleggio.imbarcazione.costo + (noleggio.skipper ? 50 : 0)) * giorniPrenotati) + prezzoAccessori;
 

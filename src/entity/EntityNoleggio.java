@@ -25,6 +25,7 @@ public class EntityNoleggio {
         this.imbarcazione = imbarcazione;
         this.accessorioObbligatorio = accessorioObbligatorio;
         this.accessoriOptional = accessoriOptional;
+        this.skipper = skipper;
 
     }
 

@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entity.EntityAccessorio;
@@ -20,7 +21,7 @@ public class NoleggioDAO {
 
 			try {
 
-				String query = "INSERT INTO NOLEGGIO VALUES (?, ?, ?, ?, ?, ?);";
+				String query = "INSERT INTO NOLEGGIO VALUES (NULL, ?, ?, ?, ?, ?, ?);";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
@@ -31,18 +32,25 @@ public class NoleggioDAO {
 				stmt.setInt(5, noleggio.accessorioObbligatorio.id);
 				stmt.setBoolean(6, noleggio.skipper);
 
-				stmt.executeQuery();
+				stmt.executeUpdate();
 
-				query = "INSERT INTO NOLEGGIO-ACCESSORIO_OPTIONAL VALUES (?, ?);";
+				stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+
+				ResultSet result = stmt.executeQuery();
+				result.next();
+
+				int idNoleggio = result.getInt(1);
+
+				query = "INSERT INTO NOLEGGIO_ACCESSORIO_OPTIONAL VALUES (?, ?);";
 
 				stmt = conn.prepareStatement(query);
 
 				for (EntityAccessorio accessorio_optional : noleggio.accessoriOptional) {
 
-					stmt.setInt(1, noleggio.idCliente);
+					stmt.setInt(1, idNoleggio);
 					stmt.setInt(2, accessorio_optional.id);
 
-					stmt.executeQuery();
+					stmt.executeUpdate();
 					
 				}
 
