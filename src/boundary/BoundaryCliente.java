@@ -8,21 +8,20 @@ import java.util.Scanner;
 
 import control.GestioneClienti;
 import control.GestioneNoleggio;
-
 import entity.EntityAccessorio;
 import entity.EntityImbarcazione;
-
 import exception.OperationException;
 
 public class BoundaryCliente {
 
 	static Scanner scan = new Scanner(System.in);
 
-	static Date dataInizio;
-	static Date dataFine;
+	private static Date dataInizio;
+	private static Date dataFine;
 
-	static boolean accesso = false;
-
+	private static boolean accesso = false;
+	
+	
 	public static void main(String[] args) {
 
 		boolean exit = false;
@@ -63,9 +62,9 @@ public class BoundaryCliente {
 
 						for (int i = 0; i < risultato.size(); i++) {
 
-							System.out.println("\t" + risultato.get(i).nome + ":");
-							System.out.println("\t\tCapienza: " + risultato.get(i).capienza);
-							System.out.println("\t\tCosto: " + risultato.get(i).costo);
+							System.out.println("\t" + risultato.get(i).getNome() + ":");
+							System.out.println("\t\tCapienza: " + risultato.get(i).getCapienza());
+							System.out.println("\t\tCosto: " + risultato.get(i).getCosto());
 								
 						}
 
@@ -115,9 +114,9 @@ public class BoundaryCliente {
 
 				for (int i = 0; i < risultati.size(); i++) {
 
-					System.out.println("\t" + (i+1) + ". " + risultati.get(i).nome + ":");
-					System.out.println("\t\tCapienza: " + risultati.get(i).capienza);
-					System.out.println("\t\tCosto: " + risultati.get(i).costo);
+					System.out.println("\t" + (i+1) + ". " + risultati.get(i).getNome() + ":");
+					System.out.println("\t\tCapienza: " + risultati.get(i).getCapienza());
+					System.out.println("\t\tCosto: " + risultati.get(i).getCosto());
 					
 				}
 
@@ -150,15 +149,15 @@ public class BoundaryCliente {
 
 				for (int i = 0; i < listaAccessori.size(); i++) {
 
-					if(!listaAccessori.get(i).obbligatiorio){
+					if(!listaAccessori.get(i).getObbligatorio()){
 
 						System.out.println("\tOptional:");
 
 						for(; i < listaAccessori.size(); i++){
 
-							System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).nome + ":");
-							System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).descrizione);
-							System.out.println("\t\t\tCosto: " + listaAccessori.get(i).prezzo);
+							System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).getNome() + ":");
+							System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).getDescrizione());
+							System.out.println("\t\t\tCosto: " + listaAccessori.get(i).getPrezzo());
 
 						}
 
@@ -166,9 +165,9 @@ public class BoundaryCliente {
 
 					}
 
-					System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).nome + ":");
-					System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).descrizione);
-					System.out.println("\t\t\tCosto: " + listaAccessori.get(i).prezzo);
+					System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).getNome() + ":");
+					System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).getDescrizione());
+					System.out.println("\t\t\tCosto: " + listaAccessori.get(i).getPrezzo());
 					
 				}
 
@@ -192,7 +191,7 @@ public class BoundaryCliente {
 
 							}else{
 
-								if(listaAccessori.get(accessorio-1).obbligatiorio){
+								if(listaAccessori.get(accessorio-1).getObbligatorio()){
 
 									if(obbligatiorioScelto){
 
@@ -663,7 +662,7 @@ public class BoundaryCliente {
 
 				try{
 
-					System.out.print("Inserire la data di nascita [aaaa/mm/gg]: ");
+					System.out.print("Inserire la data di nascita [aaaa-mm-gg]: ");
 
 					dataDiNascita = Date.valueOf(scan.nextLine());
 
@@ -705,6 +704,7 @@ public class BoundaryCliente {
 						}
 		
 					}
+					break;
 
 				}else if(scelta.equals("n")){
 

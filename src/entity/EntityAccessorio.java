@@ -2,22 +2,34 @@ package entity;
 
 public class EntityAccessorio {
     
-    public boolean obbligatiorio;
+    private boolean obbligatorio;
 
-    public int id;
+    private int id;
 
-    public String nome;
-    public String descrizione;
+    private String nome;
+    private String descrizione;
 
-    public float prezzo;
+    private float prezzo;
 
-    public EntityAccessorio(int id, String nome, String descrizione, float prezzo, boolean obbligatiorio){
+    public boolean getObbligatorio(){return obbligatorio; }
+    public int getId(){return id; }
+    public String getNome(){return nome; }
+    public String getDescrizione(){return descrizione; }
+    public float getPrezzo(){return prezzo; }
+
+    public void setObbligatorio(boolean obbligatorio){this.obbligatorio = obbligatorio; }
+    public void setId(int id){this.id = id; }
+    public void setNome(String nome){this.nome = nome; }
+    public void setDescrizione(String descrizione){this.descrizione = descrizione; }
+    public void setPrezzo(float prezzo){this.prezzo = prezzo; }
+
+    public EntityAccessorio(int id, String nome, String descrizione, float prezzo, boolean obbligatorio){
 
         this.id = id;
         this.nome = nome;
         this.descrizione =descrizione;
         this.prezzo = prezzo;
-        this.obbligatiorio = obbligatiorio;
+        this.obbligatorio = obbligatorio;
 
     }
 

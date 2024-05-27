@@ -1,21 +1,36 @@
 package entity;
 
 import java.sql.Date;
-
 import java.util.ArrayList;
 
 public class EntityNoleggio {
     
-    public Date dataInizio;
-    public Date dataFine;
+    private Date dataInizio;
+    private Date dataFine;
 
-    public int idCliente;
-    public EntityImbarcazione imbarcazione;
+    private int idCliente;
+    private EntityImbarcazione imbarcazione;
 
-    public EntityAccessorio accessorioObbligatorio;
-    public ArrayList<EntityAccessorio> accessoriOptional;
+    private EntityAccessorio accessorioObbligatorio;
+    private ArrayList<EntityAccessorio> accessoriOptional;
 
-    public boolean skipper;
+    private boolean skipper;
+
+    public Date getDataInizio(){return dataInizio; }
+    public Date getDataFine(){return dataFine; }
+    public int getIdCliente(){return idCliente; }
+    public EntityImbarcazione getImbarcazione(){return imbarcazione; }
+    public EntityAccessorio getAccessorioObbligatorio(){return accessorioObbligatorio; }
+    public ArrayList<EntityAccessorio> getAccessoriOptional(){return accessoriOptional; }
+    public boolean getSkipper(){return skipper; }
+
+    public void setDataInizio(Date dataInizio){this.dataInizio = dataInizio; }
+    public void setDataFine(Date dataFine){this.dataFine = dataFine; }
+    public void setIdCliente(int idCliente){this.idCliente = idCliente; }
+    public void setImbarcazione(EntityImbarcazione imbarcazione){this.imbarcazione = imbarcazione; }
+    public void setAccessorioObbligatorio(EntityAccessorio accessorioObbligatorio){this.accessorioObbligatorio = accessorioObbligatorio; }
+    public void setAccessoriOptional(ArrayList<EntityAccessorio> accessorioOptional){this.accessoriOptional = accessorioOptional; }
+    public void setSkipper(boolean skipper){this.skipper = skipper; }
 
     public EntityNoleggio(Date dataInizio, Date dataFine, int idCliente, EntityImbarcazione imbarcazione, EntityAccessorio accessorioObbligatorio, ArrayList<EntityAccessorio> accessoriOptional, boolean skipper){
 

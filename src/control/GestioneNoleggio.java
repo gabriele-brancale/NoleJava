@@ -2,20 +2,16 @@ package control;
 
 
 import java.sql.Date;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
 import java.util.ArrayList;
 
 import database.AccessorioDAO;
 import database.ImbarcazioneDAO;
 import database.NoleggioDAO;
-
 import entity.EntityAccessorio;
 import entity.EntityImbarcazione;
 import entity.EntityNoleggio;
-
 import exception.DAOException;
 import exception.DBConnectionException;
 import exception.OperationException;
@@ -86,7 +82,7 @@ public class GestioneNoleggio {
 
 		EntityAccessorio obbligatorio = listaAccessori.remove(0);
 
-		noleggio = new EntityNoleggio(dataInizio, dataFine, gC.getClienteRegistrato().idClienteRegistrato, imbarcazione, obbligatorio, listaAccessori, skipper);
+		noleggio = new EntityNoleggio(dataInizio, dataFine, gC.getClienteRegistrato().getIdClienteRegistrato(), imbarcazione, obbligatorio, listaAccessori, skipper);
 
 		return calcolaCosto(noleggio);
 
@@ -96,7 +92,7 @@ public class GestioneNoleggio {
 
 		try {
 
-			impegnaImbarcazione(noleggio.imbarcazione);
+			impegnaImbarcazione(noleggio.getImbarcazione());
 
 			//avviare il timer;
 
@@ -152,7 +148,7 @@ public class GestioneNoleggio {
 
 		}
 
-		disimpegnaImbarcazione(noleggio.imbarcazione);
+		disimpegnaImbarcazione(noleggio.getImbarcazione());
 
 		return true;
 
@@ -214,17 +210,17 @@ public class GestioneNoleggio {
 
 	private float calcolaCosto(EntityNoleggio noleggio){
 
-		float prezzoAccessori = noleggio.accessorioObbligatorio.prezzo;
+		float prezzoAccessori = noleggio.getAccessorioObbligatorio().getPrezzo();
 
-		for (EntityAccessorio accessorio : noleggio.accessoriOptional) {
+		for (EntityAccessorio accessorio : noleggio.getAccessoriOptional()) {
 
-			prezzoAccessori += accessorio.prezzo;
+			prezzoAccessori += accessorio.getPrezzo();
 			
 		}
 
-		long giorniPrenotati = ChronoUnit.DAYS.between(LocalDate.parse(noleggio.dataInizio.toString()),LocalDate.parse(noleggio.dataFine.toString()));
+		long giorniPrenotati = ChronoUnit.DAYS.between(LocalDate.parse(noleggio.getDataInizio().toString()),LocalDate.parse(noleggio.getDataFine().toString()));
 
-		float costo = ((noleggio.imbarcazione.costo + (noleggio.skipper ? 50 : 0)) * giorniPrenotati) + prezzoAccessori;
+		float costo = ((noleggio.getImbarcazione().getCosto() + (noleggio.getSkipper() ? 50 : 0)) * giorniPrenotati) + prezzoAccessori;
 
 		return costo;
 

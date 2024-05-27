@@ -1,14 +1,12 @@
 package control;
 
-import entity.EntityClienteRegistrato;
+import java.sql.Date;
 
+import database.ClienteRegistratoDAO;
+import entity.EntityClienteRegistrato;
 import exception.DAOException;
 import exception.DBConnectionException;
 import exception.OperationException;
-
-import database.ClienteRegistratoDAO;
-
-import java.sql.Date;
 
 public class GestioneClienti {
 
@@ -95,7 +93,7 @@ public class GestioneClienti {
     
     public boolean verificaPatente(){
 
-        return (clienteRegistrato.numeroPatente != null);
+        return (clienteRegistrato.getNumeroPatante() != null);
         
     }
 }

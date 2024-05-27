@@ -1,16 +1,15 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
+import java.util.ArrayList;
 
 import entity.EntityImbarcazione;
 import exception.DAOException;
 import exception.DBConnectionException;
-
-import java.util.ArrayList;
 
 public class ImbarcazioneDAO {
 
@@ -76,7 +75,7 @@ public class ImbarcazioneDAO {
 				PreparedStatement stmt = conn.prepareStatement(query);
 
 				stmt.setString(1, "DISMESSA");
-				stmt.setString(2, imbarcazione.targa);
+				stmt.setString(2, imbarcazione.getTarga());
 
 				stmt.executeUpdate();
 
@@ -111,7 +110,7 @@ public class ImbarcazioneDAO {
 				PreparedStatement stmt = conn.prepareStatement(query);
 
 				stmt.setString(1, "IN USO");
-				stmt.setString(2, imbarcazione.targa);
+				stmt.setString(2, imbarcazione.getTarga());
 
 				stmt.executeUpdate();
 

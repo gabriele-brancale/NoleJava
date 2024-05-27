@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import entity.EntityAccessorio;
 import entity.EntityNoleggio;
-
 import exception.DAOException;
 import exception.DBConnectionException;
 
@@ -25,12 +24,12 @@ public class NoleggioDAO {
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
-				stmt.setDate(1, noleggio.dataInizio);
-                stmt.setDate(2, noleggio.dataFine);
-                stmt.setInt(3, noleggio.idCliente);
-                stmt.setString(4, noleggio.imbarcazione.targa);
-				stmt.setInt(5, noleggio.accessorioObbligatorio.id);
-				stmt.setBoolean(6, noleggio.skipper);
+				stmt.setDate(1, noleggio.getDataInizio());
+                stmt.setDate(2, noleggio.getDataFine());
+                stmt.setInt(3, noleggio.getIdCliente());
+                stmt.setString(4, noleggio.getImbarcazione().getTarga());
+				stmt.setInt(5, noleggio.getAccessorioObbligatorio().getId());
+				stmt.setBoolean(6, noleggio.getSkipper());
 
 				stmt.executeUpdate();
 
@@ -45,10 +44,10 @@ public class NoleggioDAO {
 
 				stmt = conn.prepareStatement(query);
 
-				for (EntityAccessorio accessorio_optional : noleggio.accessoriOptional) {
+				for (EntityAccessorio accessorio_optional : noleggio.getAccessoriOptional()) {
 
 					stmt.setInt(1, idNoleggio);
-					stmt.setInt(2, accessorio_optional.id);
+					stmt.setInt(2, accessorio_optional.getId());
 
 					stmt.executeUpdate();
 					
