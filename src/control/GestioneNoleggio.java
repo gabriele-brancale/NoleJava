@@ -88,7 +88,7 @@ public class GestioneNoleggio {
 
 	}
 
-	public void conferma() throws OperationException{
+	/*public void conferma() throws OperationException{
 
 		try {
 
@@ -102,7 +102,7 @@ public class GestioneNoleggio {
 
 		}
 
-	}
+	}*/
 
 	public void annullaNoleggio(){
 
@@ -111,8 +111,6 @@ public class GestioneNoleggio {
 	}
 
 	public boolean effettuaPagamento(String numeroCarta) throws OperationException{
-
-		System.out.println("Pagamento in corso...");
 
 		try {
 
@@ -124,33 +122,35 @@ public class GestioneNoleggio {
 
 		}
 
-		System.out.println("Pagamento effettuato...");
-
         esitoPagamento = true;
 
-		try {
-
-			registraNoleggio();
-
-		} catch (OperationException e) {
-
-			System.out.println("[#] Info: Qualcosa e' andato storto durante la registrazione del noleggio, rimborso in corso...");
+		if(esitoPagamento){
 
 			try {
 
-				Thread.sleep(3000);
+				registraNoleggio();
 
-			} catch (InterruptedException e1) {}
+			} catch (OperationException e) {
 
-			System.out.println("[#] Info: Rimborso effettuato");
-			
-			throw e;
+				System.out.println("[#] Info: Qualcosa e' andato storto durante la registrazione del noleggio, rimborso in corso...");
+
+				try {
+
+					Thread.sleep(3000);
+
+				} catch (InterruptedException e1) {}
+
+				System.out.println("[#] Info: Rimborso effettuato");
+				
+				throw e;
+
+			}
 
 		}
 
-		disimpegnaImbarcazione(noleggio.getImbarcazione());
+		//disimpegnaImbarcazione(noleggio.getImbarcazione());
 
-		return true;
+		return esitoPagamento;
 
     }
 
@@ -172,7 +172,7 @@ public class GestioneNoleggio {
 
 	}
 
-	public void impegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
+	/*public void impegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
 
 		try{
 
@@ -188,9 +188,9 @@ public class GestioneNoleggio {
 
 		}
 
-	}
+	}*/
 
-	private void disimpegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
+	/*private void disimpegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
 
 		try{
 
@@ -206,7 +206,7 @@ public class GestioneNoleggio {
 
 		}
 
-	}
+	}*/
 
 	private float calcolaCosto(EntityNoleggio noleggio){
 

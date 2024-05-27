@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.GestioneClienti;
@@ -126,7 +127,16 @@ public class BoundaryCliente {
 
 					System.out.print("Inserire l'imbaracazione che si desidera: ");
 
-					scelta = scan.nextInt();
+					try {
+
+						scelta = scan.nextInt();
+
+					} catch (InputMismatchException e) {
+
+						System.out.println("[!] Errore: Input non valido... Riprovare.");
+						continue;
+
+					}
 					scan.nextLine();
 
 					if(scelta <= 0 || scelta > risultati.size()){
@@ -246,9 +256,18 @@ public class BoundaryCliente {
 
 					while(true){
 
-						System.out.println("Inserire l'opzione: ");
+						System.out.print("Inserire l'opzione: ");
 
-						scelta = scan.nextInt();		// ******************** gestire il caso in cui non viene inserito un numero ovunque ci sia uno scan.nextInt()
+						try {
+
+							scelta = scan.nextInt();
+						
+						} catch (InputMismatchException e) {
+
+							System.out.println("[!] Errore: Input non valido... Riprovare.");
+							continue;
+
+						}
 						scan.nextLine();
 
 						if(scelta == 1){
@@ -277,7 +296,7 @@ public class BoundaryCliente {
 
 					while(true){
 
-						System.out.println("Si desidera uno skipper? (avra' un costo aggiuntivo di 50euro al giorno) [s/n]: ");
+						System.out.print("Si desidera uno skipper? (avra' un costo aggiuntivo di 50euro al giorno) [s/n]: ");
 
 						String opt = scan.nextLine();
 
@@ -315,7 +334,7 @@ public class BoundaryCliente {
 
 					if(opt.equals("s")){
 
-						gN.conferma();
+						//gN.conferma();
 
 						String numeroCarta;
 
@@ -333,9 +352,15 @@ public class BoundaryCliente {
 
 						}
 
+						System.out.println("[#] Info: Pagamento in corso...");
+
 						if(gN.effettuaPagamento(numeroCarta)){
 
-							
+							System.out.println("[#] Info: Pagamento effettuato...");
+
+						}else{
+
+							System.out.println("[!] Errore: Pagamento non riuscito");
 
 						}
 
@@ -412,7 +437,16 @@ public class BoundaryCliente {
 
 			System.out.print("Inserie il numero dei passeggeri: ");
 
-			numeroPassegeri = scan.nextInt();
+			try {
+
+				numeroPassegeri = scan.nextInt();
+				
+			} catch (InputMismatchException e) {
+
+				System.out.println("[!] Errore: Input non valido... Riprovare.");
+				continue;
+
+			}
 			scan.nextLine();
 
 			if(numeroPassegeri <= 0){
@@ -679,7 +713,7 @@ public class BoundaryCliente {
 
 			while(true){
 
-				System.out.println("Si possiede una patente? [s/n]: ");
+				System.out.print("Si possiede una patente? [s/n]: ");
 
 				String scelta = scan.nextLine();
 
