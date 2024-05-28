@@ -24,7 +24,7 @@ public class ImbarcazioneDAO {
 			try {
 
 				String query = "SELECT * FROM IMBARCAZIONE i LEFT JOIN NOLEGGIO n ON i.TARGA = N.TARGA"
-							+ " AND n.DATA_INIZIO<? AND n.DATA_FINE>? WHERE n.targa IS NULL AND TIPOLOGIA=? AND CAPIENZA>=?;";
+							+ " AND n.DATA_INIZIO<? AND n.DATA_FINE>? WHERE n.targa IS NULL AND TIPOLOGIA=? AND CAPIENZA>=? AND STATO='IN USO';";
 
 				PreparedStatement stmt = conn.prepareStatement(query);
 
