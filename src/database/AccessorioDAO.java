@@ -12,7 +12,7 @@ import exception.DBConnectionException;
 
 public class AccessorioDAO {
     
-    public static ArrayList<EntityAccessorio> trovaAccessori() throws DAOException, DBConnectionException{
+    public static ArrayList<EntityAccessorio> getAccessori() throws DAOException, DBConnectionException{
 
         ArrayList<EntityAccessorio> risultato = new ArrayList<EntityAccessorio>();
 

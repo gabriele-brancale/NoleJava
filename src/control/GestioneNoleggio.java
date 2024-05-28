@@ -60,7 +60,7 @@ public class GestioneNoleggio {
 
 		try{
 
-			ArrayList<EntityAccessorio> listaAccessori = AccessorioDAO.trovaAccessori();
+			ArrayList<EntityAccessorio> listaAccessori = AccessorioDAO.getAccessori();
 
 			return listaAccessori;
 
@@ -128,7 +128,19 @@ public class GestioneNoleggio {
 
 			try {
 
-				registraNoleggio();
+				try{
+
+					NoleggioDAO.inserisciNoleggio(noleggio);
+		
+				}catch(DBConnectionException e){
+		
+					throw new OperationException("[!] Errore: Riscontrato un problema interno");
+		
+				}catch(DAOException e){
+		
+					throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+		
+				}
 
 			} catch (OperationException e) {
 
@@ -154,7 +166,7 @@ public class GestioneNoleggio {
 
     }
 
-	private void registraNoleggio() throws OperationException{
+	/* private void registraNoleggio() throws OperationException{
 
 		try{
 
@@ -170,7 +182,7 @@ public class GestioneNoleggio {
 
 		}
 
-	}
+	} */
 
 	/*public void impegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
 
