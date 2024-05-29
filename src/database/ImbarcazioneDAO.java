@@ -15,7 +15,7 @@ public class ImbarcazioneDAO {
 
     public static ArrayList<EntityImbarcazione> ricercaImbarcazioni(String tipologia, int numeroPassegeri, Date dataInizio, Date dataFine) throws DAOException, DBConnectionException{
 
-        ArrayList<EntityImbarcazione> risultato = new ArrayList<EntityImbarcazione>();
+        ArrayList<EntityImbarcazione> risultati = new ArrayList<EntityImbarcazione>();
 
 		try {
 
@@ -38,7 +38,7 @@ public class ImbarcazioneDAO {
 
                 while(result.next()){
 
-                    risultato.add(new EntityImbarcazione(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5), result.getFloat(6)));
+                    risultati.add(new EntityImbarcazione(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getInt(5), result.getFloat(6)));
 
                 }
 
@@ -58,7 +58,7 @@ public class ImbarcazioneDAO {
 
 		}
 
-		return risultato; 
+		return risultati; 
 
     }
 
