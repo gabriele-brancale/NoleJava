@@ -193,7 +193,7 @@ public class BoundaryCliente {
 
 					} catch (InputMismatchException e) {
 
-						System.out.println("[!] Errore: Input non valido... Riprovare.");
+						System.out.println("[!] Errore: Input non intero... Riprovare.");
 						continue;
 
 					}
@@ -226,7 +226,7 @@ public class BoundaryCliente {
 						for(; i < listaAccessori.size(); i++){
 
 							System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).getNome() + ":");
-							System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).getDescrizione());
+							System.out.println("\t\t\tDescrizione: " + listaAccessori.get(i).getDescrizione());
 							System.out.println("\t\t\tCosto: " + listaAccessori.get(i).getPrezzo());
 
 						}
@@ -236,7 +236,7 @@ public class BoundaryCliente {
 					}
 
 					System.out.println("\t\t" + (i+1) + ". " + listaAccessori.get(i).getNome() + ":");
-					System.out.println("\t\t\tCapienza: " + listaAccessori.get(i).getDescrizione());
+					System.out.println("\t\t\tDescrizione: " + listaAccessori.get(i).getDescrizione());
 					System.out.println("\t\t\tCosto: " + listaAccessori.get(i).getPrezzo());
 					
 				}
@@ -255,7 +255,7 @@ public class BoundaryCliente {
 							
 							int accessorio = Integer.parseInt(accessoriScelti.get(i));
 
-							if(accessorio <= 1 || accessorio > listaAccessori.size()){
+							if(accessorio < 1 || accessorio > listaAccessori.size()){
 
 								throw new Exception("Input non valido");
 
@@ -494,7 +494,7 @@ public class BoundaryCliente {
 			}else{
 
 				System.out.print("\033[K");
-				System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+				System.out.print("\u001B[31m" + "[!] Errore: Tipologia di imbarcazione non valida... Riprovare" + "\u001B[0m");
 				System.out.print("\033[F\033[K" + "\033[13;0H");
 				
 				continue;
@@ -511,7 +511,7 @@ public class BoundaryCliente {
 
 		while(true){
 
-			System.out.print("Inserie il numero dei passeggeri: " + "\u001B[34m");
+			System.out.print("Inserire il numero dei passeggeri: " + "\u001B[34m");
 
 			try {
 
@@ -528,7 +528,7 @@ public class BoundaryCliente {
 			} catch (InputMismatchException e) {
 
 				System.out.print("\033[K");
-				System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+				System.out.print("\u001B[31m" + "[!] Errore: Numero passeggeri non valido... Riprovare" + "\u001B[0m");
 				System.out.print("\033[F\033[K" + "\033[14;0H");
 				continue;
 
@@ -565,7 +565,7 @@ public class BoundaryCliente {
 				}catch(IllegalArgumentException e){
 
 					System.out.print("\033[K");
-					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\u001B[31m" + "[!] Errore: Data di inizio noleggio non valida... Riprovare" + "\u001B[0m");
 					System.out.print("\033[F\033[K" + "\033[15;0H");
 					continue;
 
@@ -594,7 +594,7 @@ public class BoundaryCliente {
 				}catch(IllegalArgumentException e){
 
 					System.out.print("\033[K");
-					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\u001B[31m" + "[!] Errore: Data di fine noleggio non valida... Riprovare" + "\u001B[0m");
 					System.out.print("\033[F\033[K" + "\033[16;0H");
 					continue;
 
