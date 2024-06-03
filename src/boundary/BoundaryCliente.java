@@ -20,7 +20,7 @@ import exception.OperationException;
 
 public class BoundaryCliente {
 
-	static Scanner scan = new Scanner(System.in);
+	static Scanner scan;
 
 	private static Date dataInizio;
 	private static Date dataFine;
@@ -30,6 +30,8 @@ public class BoundaryCliente {
 	public static void main(String[] args) {
 
 		boolean exit = false;
+
+		scan = new Scanner(System.in);
 
 		String in;
 
@@ -155,6 +157,7 @@ public class BoundaryCliente {
 			}
 
 		}
+
 	}
 
 	private static void noleggiaImbarcazione() throws OperationException{
