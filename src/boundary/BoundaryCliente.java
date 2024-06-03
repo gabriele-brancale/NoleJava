@@ -1,7 +1,10 @@
 package boundary;
 
+
 import java.sql.Date;
+
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -9,8 +12,10 @@ import java.util.Scanner;
 
 import control.GestioneClienti;
 import control.GestioneNoleggio;
+
 import entity.EntityAccessorio;
 import entity.EntityImbarcazione;
+
 import exception.OperationException;
 
 public class BoundaryCliente {
@@ -22,24 +27,39 @@ public class BoundaryCliente {
 
 	private static boolean accesso = false;
 	
-	
 	public static void main(String[] args) {
 
 		boolean exit = false;
 
 		String in;
-		
-		System.out.println("Bevenuto in NoleJava");
+
+		System.out.println("\033[H\033[2J");
+
+		System.out.print("  _   _       _          _                  \r\n" +
+						   " | \\ | | ___ | | ___    | | __ ___   ____ _ \r\n" +
+						   " |  \\| |/ _ \\| |/ _ \\_  | |/ _` \\ \\ / / _` |\r\n" +
+						   " | |\\  | (_) | |  __/ |_| | (_| |\\ V / (_| |\r\n" +
+						   " |_| \\_|\\___/|_|\\___|\\___/ \\__,_| \\_/ \\__,_|\r\n" +
+						   "                                By Project-X\r\n");
+
+		System.out.println();
 
 		while(!exit) {
 
-			System.out.println("1. LogIn");
-			System.out.println("2. Registrazione");
-			System.out.println("3. Ricerca Imbarcazioni");
-			System.out.println("4. Noleggio Imbarcazioni");
-			System.out.println("5. Esci");
+			System.out.println(/* "\u001B[35m" */"\u001B[32m" + "  MENU:" + "\u001B[0m");
+			System.out.println("   1. Login");
+			System.out.println("   2. Registrazione");
+			System.out.println("   3. Ricerca Imbarcazioni");
+			System.out.println("   4. Noleggio Imbarcazioni");
+			System.out.println("   5. Esci");
+
+			System.out.println();
+
+			System.out.print("Scegli un'opzione: " + "\u001B[34m");
 
 			in = scan.nextLine();
+
+			System.out.print("\u001B[0m");
 
 			try{
 
@@ -47,27 +67,58 @@ public class BoundaryCliente {
 
 					case "1":
 
-						login();
+						if(accesso == false){
+
+							System.out.print("\033[9;0H\033[0J");
+							login();
+							System.out.print("\033[9;0H\033[0J");
+						
+						}else{
+
+							System.out.print("\u001B[33m" + "[#] Attenzione: Login già effettuato");
+							System.out.print("\033[F\033[K" + "\033[9;0H");
+
+						}
 						break;
 						
 					case "2":
 
+						System.out.print("\033[9;0H\033[0J");
 						registrazione();
+						System.out.print("\033[9;0H\033[0J");
 						break;
 
 					case "3": 
 
+						System.out.print("\033[9;0H\033[0J");
+
 						ArrayList<EntityImbarcazione> risultato = ricercaImbarcazioni();
+
+						System.out.print("\033[13;0H\033[0J");
 
 						System.out.println("Imbarcazioni disponibili:");
 
 						for (int i = 0; i < risultato.size(); i++) {
 
-							System.out.println("\t" + risultato.get(i).getNome() + ":");
-							System.out.println("\t\tCapienza: " + risultato.get(i).getCapienza());
-							System.out.println("\t\tCosto: " + risultato.get(i).getCosto());
+							System.out.println(" " + risultato.get(i).getNome() + ":");
+							System.out.println("  Capienza: " + risultato.get(i).getCapienza());
+							System.out.println("  Costo: " + risultato.get(i).getCosto());
 								
 						}
+
+						System.out.println();
+
+						System.out.print("Premere [ENTER] per tornare al menu...");
+
+						try
+						{
+							System.in.read();
+							scan.nextLine();
+						}  
+						catch(Exception e)
+						{}
+
+						System.out.print("\033[9;0H\033[0J");
 
 						break;
 					
@@ -79,18 +130,27 @@ public class BoundaryCliente {
 					case "5":
 
 						exit = true;
-						System.out.println("Arrivederci!");
+						System.out.print("\033[9;0H\033[0J");
+						System.out.print("\u001B[32m");
+						System.out.println(" ╔═══════════════════╗");
+						System.out.println(" ║    Arrivederci    ║");
+						System.out.println(" ╚═══════════════════╝");
+						System.out.println("\u001B[0m");
 						break;
 
 					default: 
 
-						System.out.println("Opzione non valida");
+						System.out.print("\033[K");
+						System.out.print("\u001B[31m" + "[!] Errore: Opzione non valida" + "\u001B[0m");
+						System.out.print("\033[F\033[K" + "\033[9;0H");
 
 				}
 
 			}catch(OperationException e){
 
-				System.out.println("[!] Errore: Operazione fallita");
+				System.out.print("\033[9;0H\033[0J\033[17;0H");
+				System.out.print("\u001B[31m" + "[!] Errore: Operazione fallita" + "\u001B[0m");
+				System.out.print("\033[9;0H");
 
 			}
 
@@ -195,7 +255,7 @@ public class BoundaryCliente {
 							
 							int accessorio = Integer.parseInt(accessoriScelti.get(i));
 
-							if(accessorio <= 0 || accessorio > listaAccessori.size()){
+							if(accessorio <= 1 || accessorio > listaAccessori.size()){
 
 								throw new Exception("Input non valido");
 
@@ -403,15 +463,25 @@ public class BoundaryCliente {
 		String tipologia = null;
 		int numeroPassegeri;
 
+		System.out.print("\u001B[32m");
+		System.out.println(" ╔═══════════════╗");
+		System.out.println(" ║    RICERCA    ║");
+		System.out.println(" ╚═══════════════╝");
+		System.out.print("\u001B[0m");
+		System.out.println();
+
 		while(true){
 
-			System.out.println("Scegliere la tipologia:");
-			System.out.println("\t1. A vela");
-			System.out.println("\t2. A motore");
+			System.out.println("\u001B[32m" + "Scegliere la tipologia:" +  "\u001B[0m");
+			System.out.println(" 1. A vela");
+			System.out.println(" 2. A motore");
+			System.out.println();
 
-			System.out.print("Inserire l'opzione: ");
+			System.out.print("Inserire l'opzione: " + "\u001B[34m");
 
 			tipologia = scan.nextLine();
+
+			System.out.print("\u001B[0m");
 
 			if(tipologia.equals("1")){
 
@@ -423,11 +493,17 @@ public class BoundaryCliente {
 
 			}else{
 
-				System.out.println("[!] Errore: Input non valido... Riprovare.");
+				System.out.print("\033[K");
+				System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+				System.out.print("\033[F\033[K" + "\033[13;0H");
 				
 				continue;
 
 			}
+
+			System.out.print("\033[13;0H\033[0J");
+			System.out.println("Inserire la tipologia:" + "\u001B[34m" + " " + tipologia + "\u001B[0m");
+			
 
 			break;
 
@@ -435,24 +511,30 @@ public class BoundaryCliente {
 
 		while(true){
 
-			System.out.print("Inserie il numero dei passeggeri: ");
+			System.out.print("Inserie il numero dei passeggeri: " + "\u001B[34m");
 
 			try {
 
 				numeroPassegeri = scan.nextInt();
+
+				System.out.print("\u001B[0m");
+
+				if(numeroPassegeri <= 0){
+
+					throw new InputMismatchException();
+	
+				}
 				
 			} catch (InputMismatchException e) {
 
-				System.out.println("[!] Errore: Input non valido... Riprovare.");
+				System.out.print("\033[K");
+				System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+				System.out.print("\033[F\033[K" + "\033[14;0H");
 				continue;
 
-			}
-			scan.nextLine();
+			}finally {
 
-			if(numeroPassegeri <= 0){
-
-				System.out.println("[!] Errore: Input non valido... Riprovare.");
-				continue;
+				scan.nextLine();
 
 			}
 
@@ -464,13 +546,15 @@ public class BoundaryCliente {
 
 			while(true){
 
-				System.out.print("Inserire la data di inzio del noleggio [aaaa-mm-gg]: ");
+				System.out.print("Inserire la data di inzio del noleggio [aaaa-mm-gg]: " + "\u001B[34m");
 
 				try{
 					
 					String data = scan.nextLine();
 
 					dataInizio = Date.valueOf(data);
+
+					System.out.print("\u001B[0m");
 
 					if(Date.valueOf(LocalDate.now()).after(dataInizio)){
 
@@ -480,7 +564,9 @@ public class BoundaryCliente {
 
 				}catch(IllegalArgumentException e){
 
-					System.out.println("[!] Errore: Input non valido... Riprovare.");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[15;0H");
 					continue;
 
 				}
@@ -493,9 +579,11 @@ public class BoundaryCliente {
 
 				try{
 
-					System.out.print("Inserire la data di fine del nolggio [aaaa-mm-gg]: ");
+					System.out.print("Inserire la data di fine del nolggio [aaaa-mm-gg]: " + "\u001B[34m");
 
 					dataFine = Date.valueOf(scan.nextLine());
+
+					System.out.print("\u001B[0m");
 
 					if(Date.valueOf(LocalDate.now()).after(dataFine)){
 
@@ -505,7 +593,9 @@ public class BoundaryCliente {
 
 				}catch(IllegalArgumentException e){
 
-					System.out.println("[!] Errore: Input non valido... Riprovare.");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[16;0H");
 					continue;
 
 				}
@@ -516,7 +606,10 @@ public class BoundaryCliente {
 
 			if(dataInizio.after(dataFine)){
 
-				System.out.print("[!] Errore: Input non valido... Riprovare");
+				System.out.print("\033[F\033[K");
+				System.out.println("\033[F\033[K");
+				System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+				System.out.print("\033[15;0H");
 
 				continue;
 
@@ -546,13 +639,22 @@ public class BoundaryCliente {
 		String email;
 		String password;
 
+		System.out.print("\u001B[32m");
+		System.out.println(" ╔═════════════╗");
+		System.out.println(" ║    LOGIN    ║");
+		System.out.println(" ╚═════════════╝");
+		System.out.print("\u001B[0m");
+		System.out.println();
+
 		while(true){
 
 			while(true){
 
-				System.out.print("Inserire l'indirizzo email: ");
+				System.out.print("Inserire l'indirizzo email: " + "\u001B[34m");
 
 				email = scan.nextLine();
+
+				System.out.print("\u001B[0m");
 
 				// controllare anche la lunghezza
 
@@ -562,17 +664,24 @@ public class BoundaryCliente {
 
 				}else{
 				
-					System.out.println("[!] Errore: Input non valido... Riprovare");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[13;0H");
+					
 
 				}
 			
 			}
 
+			System.out.print("\033[K");
+
 			while(true){
 
-				System.out.print("Inserire la password: ");
+				System.out.print("Inserire la password: " + "\u001B[34m");
 
 				password = scan.nextLine();
+
+				System.out.print("\u001B[0m");
 
 				// controllare la lunghezza
 
@@ -590,13 +699,17 @@ public class BoundaryCliente {
 
 				if(accesso == true){
 
-					System.out.println("[#] Info: Login effettuato");
+					//System.out.println("[#] Info: Login effettuato");
+					System.out.print("\033[7;0H");
+					System.out.print("\u001B[32m" + " Login effettuato" + "\u001B[0m");
 		
 					break;
 
 				}
 
-				System.out.println("[#] Info: Login fallito... Email o password non corretti, riprovare");
+				System.out.println("\033[13;0H\033[0J");
+				System.out.print("\u001B[33m" + "[#] Attenzione: Login fallito... Email o password non corretti, riprovare" + "\u001B[0m");
+				System.out.print("\033[13;0H");
 
 			} catch (OperationException e) {
 				
@@ -617,50 +730,72 @@ public class BoundaryCliente {
 		String password;
 		Date dataDiNascita;
 		String numeroPatente;
+		Thread caricamento = null;
+
+		System.out.print("\u001B[32m");
+		System.out.println(" ╔═════════════════════╗");
+		System.out.println(" ║    REGISTRAZIONE    ║");
+		System.out.println(" ╚═════════════════════╝");
+		System.out.print("\u001B[0m");
+		System.out.println();
 
 		while(true){
 
 			while(true){
 
-				System.out.print("Inserire il nome: ");
+				System.out.print("Inserire il nome: " + "\u001B[34m");
 
 				nome = scan.nextLine();
 
+				System.out.print("\u001B[0m");
+
 				if(nome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
 
 					break;
 
 				}else{
 
-					System.out.println("[!] Errore: Input non valido... Riprovare");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[13;0H");
 
 				}
 
 			}
+			
+			System.out.print("\033[K");
 
 			while(true){
 
-				System.out.print("Inserire il cognome: ");
+				System.out.print("Inserire il cognome: " + "\u001B[34m");
 
 				cognome = scan.nextLine();
 
-				if(nome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
+				System.out.print("\u001B[0m");
+
+				if(cognome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
 
 					break;
 
 				}else{
 
-					System.out.println("[!] Errore: Input non valido... Riprovare");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[14;0H");
 
 				}
 
 			}
 
+			System.out.print("\033[K");
+
 			while(true){
 
-				System.out.print("Inserire l'indirizzo email: ");
+				System.out.print("Inserire l'indirizzo email: " + "\u001B[34m");
 
 				email = scan.nextLine();
+
+				System.out.print("\u001B[0m");
 
 				// controllare anche la lunghezza
 
@@ -670,17 +805,23 @@ public class BoundaryCliente {
 
 				}else{
 				
-					System.out.println("[!] Errore: Input non valido... Riprovare");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[15;0H");
 
 				}
 			
 			}
 
+			System.out.print("\033[K");
+
 			while(true){
 
-				System.out.print("Inserire la password: ");
+				System.out.print("Inserire la password: " + "\u001B[34m");
 
 				password = scan.nextLine();
+
+				System.out.print("\u001B[0m");
 
 				// controllare la lunghezza
 
@@ -692,30 +833,39 @@ public class BoundaryCliente {
 
 			}
 
+			System.out.print("\033[K");
+
 			while(true){
 
 				try{
 
-					System.out.print("Inserire la data di nascita [aaaa-mm-gg]: ");
+					System.out.print("Inserire la data di nascita [aaaa-mm-gg]: " + "\u001B[34m");
 
 					dataDiNascita = Date.valueOf(scan.nextLine());
 
+					System.out.print("\u001B[0m");
+
+					break;
+
 				}catch(IllegalArgumentException e){
 
-					System.out.println("[!] Errore: Input non valido... Riprovare.");
-					continue;
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[17;0H");
 
 				}
 
-				break;
-
 			}
+
+			System.out.print("\033[K");
 
 			while(true){
 
-				System.out.print("Si possiede una patente? [s/n]: ");
+				System.out.print("Si possiede una patente? [s/n]: " + "\u001B[34m");
 
 				String scelta = scan.nextLine();
+
+				System.out.print("\u001B[0m");
 
 				scelta = scelta.toLowerCase();
 
@@ -723,17 +873,60 @@ public class BoundaryCliente {
 
 					while(true){
 
-						System.out.print("Inserire il numero di patente: ");
+						System.out.print("Inserire il numero di patente: " + "\u001B[34m");
 		
 						numeroPatente = scan.nextLine().toUpperCase();
+
+						System.out.print("\u001B[0m");
 		
-						if(numeroPatente.length() <= 10 && numeroPatente.length() >= 7 && numeroPatente.substring(0, 2).matches("[a-zA-Z]+") && numeroPatente.substring(2, numeroPatente.length()).matches( "\\d+")){
+						if(numeroPatente.length() >= 7 && numeroPatente.length() <= 10 && numeroPatente.substring(0, 2).matches("[A-Z]+") && numeroPatente.substring(2, numeroPatente.length()).matches("\\d+")){
 		
+							//System.out.print("\033[K");
+							//System.out.print("\u001B[33m" + "[#] Registrazione in corso..." + "\u001B[0m");
+
+							caricamento = new Thread(() -> {
+
+								while(true){
+
+									System.out.print("\033[2K\033[0G");
+									System.out.print("\u001B[33m" + "[#] Registrazione in corso." + "\u001B[0m");
+
+									try {
+										Thread.sleep(500);
+									} catch (InterruptedException e) {
+										break;
+									}
+
+									System.out.print("\033[2K\033[0G");
+									System.out.print("\u001B[33m" + "[#] Registrazione in corso.." + "\u001B[0m");
+
+									try {
+										Thread.sleep(500);
+									} catch (InterruptedException e) {
+										break;
+									}
+
+									System.out.print("\033[2K\033[0G");
+									System.out.print("\u001B[33m" + "[#] Registrazione in corso..." + "\u001B[0m");
+
+									try {
+										Thread.sleep(500);
+									} catch (InterruptedException e) {
+										break;
+									}
+
+								}
+
+							});
+							caricamento.start();
+
 							break;
 		
 						}else{
 		
-							System.out.println("[!] Errore: Input non valido... Riprovare.");
+							System.out.print("\033[K");
+							System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+							System.out.print("\033[F\033[K" + "\033[19;0H");
 		
 						}
 		
@@ -764,11 +957,15 @@ public class BoundaryCliente {
 
 				}else{
 
-					System.out.println("[!] Errore: Esiste gia' un account con questa email... Riprovare");
+					caricamento.interrupt();
+
+					System.out.println("[#] Attenzione: Esiste gia' un account con questa email... Riprovare");
 
 				}
 
 			}catch(OperationException e){
+
+				caricamento.interrupt();
 
 				throw e;
 
