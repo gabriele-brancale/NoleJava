@@ -262,7 +262,7 @@ public class BoundaryCliente {
 
 							if(accessorio < 1 || accessorio > listaAccessori.size()){
 
-								throw new Exception("Input non valido");
+								throw new Exception("[!] Errore: Input non valido, è possibile scegliere solo gli accessori elencati... Riprovare");
 
 							}else{
 
@@ -270,7 +270,7 @@ public class BoundaryCliente {
 
 									if(obbligatiorioScelto){
 
-										throw new Exception("Piu' di un obbligatorio selezionato");
+										throw new Exception("[!] Errore: Piu' di un obbligatorio selezionato... Riprovare");
 										// errore piu' di un obbligatorio
 
 									}else{
@@ -287,7 +287,7 @@ public class BoundaryCliente {
 
 						if(!obbligatiorioScelto){
 
-							throw new Exception("Piu' di un obbligatorio selezionato");
+							throw new Exception("[!] Errore: Devi selezionare almeno un accessorio obbligatorio... Riprovare");
 
 						}
 
@@ -307,7 +307,7 @@ public class BoundaryCliente {
 					
 					}catch(Exception e){
 
-						System.out.println("[!] Errore: Input non valido");
+						System.out.println(e.getMessage());
 
 					}
 
@@ -611,7 +611,7 @@ public class BoundaryCliente {
 
 				System.out.print("\033[F\033[K");
 				System.out.println("\033[F\033[K");
-				System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare" + "\u001B[0m");
+				System.out.print("\u001B[31m" + "[!] Errore: Data di fine noleggio non valida... Riprovare" + "\u001B[0m");
 				System.out.print("\033[15;0H");
 
 				continue;

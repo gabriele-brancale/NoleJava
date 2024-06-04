@@ -84,9 +84,9 @@ public class RicercaTest {
 
         String out;
         
-        out = "[!] Errore: Data di inizio noleggio non valida... Riprovare"; //Da chiedere a Gabriele
+        out = "[!] Errore: Data di inizio noleggio non valida... Riprovare";  
 
-        System.setIn(new ByteArrayInputStream("3\n1\n3\n01-07-2024\n2024-08-01\n2024-09-01\n\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("3\n1\n3\n01-07-2024\n2024-08-01\n2024-09-01\n\n5\n".getBytes()));  
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -112,9 +112,9 @@ public class RicercaTest {
 
         String out;
         
-        out = "[!] Errore: Data di inizio noleggio non valida... Riprovare"; //Da chiedere a Gabriele
+        out = "[!] Errore: Data di inizio noleggio non valida... Riprovare";  
 
-        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-02-01\n2024-08-01\n2024-09-01\n\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-02-01\n2024-08-01\n2024-09-01\n\n5\n".getBytes()));  
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -124,7 +124,7 @@ public class RicercaTest {
         BoundaryCliente.main(new String[]{});
 
         String actual = os.toString();
-        //Da chiedere a Gabriele
+         
 
         assertTrue(actual.contains(out));
 
@@ -141,9 +141,9 @@ public class RicercaTest {
 
         String out;
         
-        out = "[!] Errore: Data di fine noleggio non valida... Riprovare"; //Da chiedere a Gabriele
+        out = "[!] Errore: Data di fine noleggio non valida... Riprovare";  
 
-        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-08-01\n01-08-2024\n2024-09-01\n\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-08-01\n01-08-2024\n2024-09-01\n\n5\n".getBytes()));  
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -169,9 +169,9 @@ public class RicercaTest {
 
         String out;
         
-        out = "[!] Errore: Input non valido... Riprovare"; //Da chiedere a Gabriele
+        out = "[!] Errore: Data di fine noleggio non valida... Riprovare"; 
 
-        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-08-01\n2024-07-01\n2024-08-01\n2024-09-01\n\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-08-01\n2024-07-01\n2024-08-01\n2024-09-01\n\n5\n".getBytes()));  
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -181,7 +181,6 @@ public class RicercaTest {
         BoundaryCliente.main(new String[]{});
 
         String actual = os.toString();
-        //Da chiedere a Gabriele
 
         assertTrue(actual.contains(out));
 
@@ -198,9 +197,9 @@ public class RicercaTest {
 
         String out;
         
-        out = "[!] Errore: Tipologia di imbarcazione non valida... Riprovare"; //Da chiedere a Gabriele
+        out = "[!] Errore: Tipologia di imbarcazione non valida... Riprovare"; 
 
-        System.setIn(new ByteArrayInputStream("3\n3\n1\n3\n2024-08-01\n2024-09-01\n\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("3\n3\n1\n3\n2024-08-01\n2024-09-01\n\n5\n".getBytes()));  
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -210,7 +209,7 @@ public class RicercaTest {
         BoundaryCliente.main(new String[]{});
 
         String actual = os.toString();
-        //Da chiedere a Gabriele
+         
 
         assertTrue(actual.contains(out));
 
@@ -227,9 +226,9 @@ public class RicercaTest {
 
         String out;
         
-        out = "[!] Errore: Numero passeggeri non valido... Riprovare"; //Da chiedere a Gabriele
+        out = "[!] Errore: Numero passeggeri non valido... Riprovare";  
 
-        System.setIn(new ByteArrayInputStream("3\n1\n-1\n3\n2024-08-01\n2024-09-01\n\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("3\n1\n-1\n3\n2024-08-01\n2024-09-01\n\n5\n".getBytes()));  
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -239,7 +238,7 @@ public class RicercaTest {
         BoundaryCliente.main(new String[]{});
 
         String actual = os.toString();
-        //Da chiedere a Gabriele
+         
 
         assertTrue(actual.contains(out));
 

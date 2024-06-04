@@ -19,9 +19,9 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore:"; //Da chiedere a Gabriele
+        out = "[!] Errore:"; 
 
-        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -30,7 +30,7 @@ public class SceltaAccessoriTest {
 
         BoundaryCliente.main(new String[]{});
 
-        String actual = os.toString();//Da chiedere a Gabriele
+        String actual = os.toString();
 
         assertTrue(!actual.contains(out));
 
@@ -47,9 +47,9 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore:"; //Da chiedere a Gabriele
+        out = "[!] Errore: Input non valido, è possibile scegliere solo gli accessori elencati... Riprovare";   
 
-        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 -1\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 -1\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -58,7 +58,7 @@ public class SceltaAccessoriTest {
 
         BoundaryCliente.main(new String[]{});
 
-        String actual = os.toString();//Da chiedere a Gabriele
+        String actual = os.toString();  
 
         assertTrue(actual.contains(out));
 
@@ -75,9 +75,9 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore:"; //Da chiedere a Gabriele
+        out = "[!] Errore: Input non valido, è possibile scegliere solo gli accessori elencati... Riprovare";   
 
-        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 6\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 6\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -86,7 +86,7 @@ public class SceltaAccessoriTest {
 
         BoundaryCliente.main(new String[]{});
 
-        String actual = os.toString();//Da chiedere a Gabriele
+        String actual = os.toString();  
 
         assertTrue(actual.contains(out));
 
@@ -103,9 +103,9 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore:"; //Da chiedere a Gabriele
+        out = "[!] Errore: Devi selezionare almeno un accessorio obbligatorio... Riprovare";   
 
-        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n3 4\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n3 4\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -114,7 +114,7 @@ public class SceltaAccessoriTest {
 
         BoundaryCliente.main(new String[]{});
 
-        String actual = os.toString();//Da chiedere a Gabriele
+        String actual = os.toString();  
 
         assertTrue(actual.contains(out));
 
@@ -131,9 +131,9 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore:"; //Da chiedere a Gabriele
+        out = "[!] Errore: Piu' di un obbligatorio selezionato... Riprovare";   
 
-        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 2\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes())); //Da chiedere a Gabriele
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 2\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -142,7 +142,7 @@ public class SceltaAccessoriTest {
 
         BoundaryCliente.main(new String[]{});
 
-        String actual = os.toString();//Da chiedere a Gabriele
+        String actual = os.toString();  
 
         assertTrue(actual.contains(out));
 
