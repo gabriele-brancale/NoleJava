@@ -131,9 +131,37 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore: Piu' di un obbligatorio selezionato... Riprovare";   
+        out = "[!] Errore: Input non valido, piu' di un obbligatorio selezionato... Riprovare";   
 
         System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 2\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream output = new PrintStream(os);
+
+        System.setOut(output);
+
+        BoundaryCliente.main(new String[]{});
+
+        String actual = os.toString();  
+
+        assertTrue(actual.contains(out));
+
+        System.setIn(input_bak);
+        System.setOut(output_bak);
+
+    }
+
+    @Test
+    public void listaConAlmenoUnAccessorioNonNumero(){
+
+        InputStream input_bak = System.in;
+        PrintStream output_bak = System.out;
+
+        String out;
+        
+        out = "[!] Errore: Input non valido, inserire i numeri corrispondenti agli accessori desiderati... Riprovare";   
+
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-03-01\n2025-04-01\n1\n1 3 a !\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);

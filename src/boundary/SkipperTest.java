@@ -54,7 +54,11 @@ public class SkipperTest {
 
 					assertTrue(c);
 
-				}
+				}else{
+
+                    assertTrue(false);
+
+                }
 
 			}catch(SQLException e) {
 
@@ -113,7 +117,11 @@ public class SkipperTest {
 
 					assertFalse(c);
 
-				}
+				}else{
+
+                    assertTrue(false);
+
+                }
 
 			}catch(SQLException e) {
 
@@ -198,7 +206,11 @@ public class SkipperTest {
 
 					assertFalse(c);
 
-				}
+				}else{
+
+                    assertTrue(false);
+
+                }
 
 			}catch(SQLException e) {
 

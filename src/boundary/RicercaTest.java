@@ -20,10 +20,10 @@ public class RicercaTest {
 
         String out;
 
-        out = "Imbarcazioni disponibili:\r\n";
-        out += " La Bellissima:\r\n";
-        out += "  Capienza: 4\r\n";
-        out += "  Costo: 30.0\r\n";
+        out = "Imbarcazioni disponibili:\u001B[0m\r\n";
+        out += "  La Bellissima:\r\n";
+        out += "    Capienza: 4\r\n";
+        out += "    Costo: 30.0\r\n";
         out += "\r\n";
 
         System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-07-01\n2024-08-01\n\n5\n".getBytes()));
@@ -52,10 +52,10 @@ public class RicercaTest {
 
         String out;
         
-        out = "Imbarcazioni disponibili:\r\n";
-        out += " Amanda:\r\n";
-        out += "  Capienza: 6\r\n";
-        out += "  Costo: 50.0\r\n";
+        out = "Imbarcazioni disponibili:\u001B[0m\r\n";
+        out += "  Amanda:\r\n";
+        out += "    Capienza: 6\r\n";
+        out += "    Costo: 50.0\r\n";
         out += "\r\n";
 
         System.setIn(new ByteArrayInputStream("3\n2\n3\n2024-07-01\n2024-08-01\n\n5\n".getBytes()));
@@ -172,6 +172,62 @@ public class RicercaTest {
         out = "[!] Errore: Data di fine noleggio non valida... Riprovare"; 
 
         System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-08-01\n2024-07-01\n2024-08-01\n2024-09-01\n\n5\n".getBytes()));  
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream output = new PrintStream(os);
+
+        System.setOut(output);
+
+        BoundaryCliente.main(new String[]{});
+
+        String actual = os.toString();
+
+        assertTrue(actual.contains(out));
+
+        System.setIn(input_bak);
+        System.setOut(output_bak);
+
+    }
+
+    @Test
+    public void periodoSovrappostoParzialmente(){
+
+        InputStream input_bak = System.in;
+        PrintStream output_bak = System.out;
+
+        String out;
+
+        out = "[#] Info: Nessun risultato trovato";
+
+        System.setIn(new ByteArrayInputStream("3\n2\n3\n2025-02-15\n2025-03-15\n\n5\n".getBytes()));
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream output = new PrintStream(os);
+
+        System.setOut(output);
+
+        BoundaryCliente.main(new String[]{});
+
+        String actual = os.toString();
+
+        assertTrue(actual.contains(out));
+
+        System.setIn(input_bak);
+        System.setOut(output_bak);
+
+    }
+
+    @Test
+    public void periodoSovrappostoStrettamente(){
+
+        InputStream input_bak = System.in;
+        PrintStream output_bak = System.out;
+
+        String out;
+
+        out = "[#] Info: Nessun risultato trovato";
+
+        System.setIn(new ByteArrayInputStream("3\n2\n3\n2025-03-01\n2025-04-01\n\n5\n".getBytes()));
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);

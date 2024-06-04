@@ -46,11 +46,11 @@ public class GestioneNoleggio {
 
 		}catch(DBConnectionException e){
 
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Riscontrato un problema interno");
 
 		}catch(DAOException e){
 
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Impossibile trovare i dati necessari");
 
 		}
 
@@ -66,11 +66,11 @@ public class GestioneNoleggio {
 
 		}catch(DBConnectionException e){
 
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Riscontrato un problema interno");
 
 		}catch(DAOException e){
 
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Impossibile trovare i dati necessari");
 
 		}
 
@@ -87,22 +87,6 @@ public class GestioneNoleggio {
 		return calcolaCosto(noleggio);
 
 	}
-
-	/*public void conferma() throws OperationException{
-
-		try {
-
-			impegnaImbarcazione(noleggio.getImbarcazione());
-
-			//avviare il timer;
-
-		} catch (OperationException e) {
-			
-			throw e;
-
-		}
-
-	}*/
 
 	public void annullaNoleggio(){
 
@@ -134,11 +118,11 @@ public class GestioneNoleggio {
 		
 				}catch(DBConnectionException e){
 		
-					throw new OperationException("[!] Errore: Riscontrato un problema interno");
+					throw new OperationException("\u001B[31m" + "[!] Errore: Riscontrato un problema interno");
 		
 				}catch(DAOException e){
 		
-					throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+					throw new OperationException("\u001B[31m" + "[!] Errore: Impossibile trovare i dati necessari");
 		
 				}
 
@@ -160,65 +144,9 @@ public class GestioneNoleggio {
 
 		}
 
-		//disimpegnaImbarcazione(noleggio.getImbarcazione());
-
 		return esitoPagamento;
 
     }
-
-	/* private void registraNoleggio() throws OperationException{
-
-		try{
-
-			NoleggioDAO.inserisciNoleggio(noleggio);
-
-		}catch(DBConnectionException e){
-
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
-
-		}catch(DAOException e){
-
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
-
-		}
-
-	} */
-
-	/*public void impegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
-
-		try{
-
-			ImbarcazioneDAO.impegnaImbarcazione(imbarcazione);
-
-		}catch(DBConnectionException e){
-
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
-
-		}catch(DAOException e){
-
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
-
-		}
-
-	}*/
-
-	/*private void disimpegnaImbarcazione(EntityImbarcazione imbarcazione) throws OperationException{
-
-		try{
-
-			ImbarcazioneDAO.impegnaImbarcazione(imbarcazione);
-
-		}catch(DBConnectionException e){
-
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
-
-		}catch(DAOException e){
-
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
-
-		}
-
-	}*/
 
 	private float calcolaCosto(EntityNoleggio noleggio){
 
