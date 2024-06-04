@@ -25,13 +25,15 @@ public class BoundaryCliente {
 	private static Date dataInizio;
 	private static Date dataFine;
 
-	private static boolean accesso = false;
+	private static boolean accesso;
 	
 	public static void main(String[] args) {
 
 		boolean exit = false;
 
 		scan = new Scanner(System.in);
+
+		accesso = false;
 
 		String in;
 
@@ -396,8 +398,6 @@ public class BoundaryCliente {
 					opt = opt.toLowerCase();
 
 					if(opt.equals("s")){
-
-						//gN.conferma();
 
 						String numeroCarta;
 

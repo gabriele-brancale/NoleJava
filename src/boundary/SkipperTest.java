@@ -1,6 +1,9 @@
 package boundary;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,12 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.junit.Test;
-
-import database.DBManager;
-import entity.EntityAccessorio;
-import exception.DAOException;
+import java.sql.Date;
 
 public class SkipperTest {
     
@@ -26,7 +24,7 @@ public class SkipperTest {
         InputStream input_bak = System.in;
         PrintStream output_bak = System.out;
 
-        System.setIn(new ByteArrayInputStream("3\n1\n3\n2024-07-01\n2024-08-01\n\n5\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2024-11-01\n2024-12-01\n1\n1 4\n1\nmariorossi@gmail.com\npippo2002\ns\ns\n1234567812345678\n5\n".getBytes()));
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         PrintStream output = new PrintStream(os);
@@ -35,60 +33,192 @@ public class SkipperTest {
 
         BoundaryCliente.main(new String[]{});
 
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/nolejava", "root", "root");
+		try{
 
-        try {
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/nolejava", "root", "root");
 
-			String query = "SELECT SKIPPER FROM NOLEGGIO WHERE ;";
+			try {
 
-			PreparedStatement stmt = conn.prepareStatement(query);
+				String query = "SELECT SKIPPER FROM NOLEGGIO WHERE DATA_INIZIO=? AND DATA_FINE=?;";
 
-			stmt.setDate(1, noleggio.getDataInizio());
-            stmt.setDate(2, noleggio.getDataFine());
-            stmt.setInt(3, noleggio.getIdCliente());
-            stmt.setString(4, noleggio.getImbarcazione().getTarga());
-			stmt.setInt(5, noleggio.getAccessorioObbligatorio().getId());
-			stmt.setBoolean(6, noleggio.getSkipper());
+				PreparedStatement stmt = conn.prepareStatement(query);
 
-			stmt.executeUpdate();
+				stmt.setDate(1, Date.valueOf("2024-11-01"));
+				stmt.setDate(2, Date.valueOf("2024-12-01"));
 
-			stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+				ResultSet result = stmt.executeQuery();
+				
+				if(result.next()){
 
-			ResultSet result = stmt.executeQuery();
-			result.next();
+					boolean c = result.getBoolean(1);
 
-			int idNoleggio = result.getInt(1);
+					assertTrue(c);
 
-			query = "INSERT INTO NOLEGGIO_ACCESSORIO_OPTIONAL VALUES (?, ?);";
+				}
 
-			stmt = conn.prepareStatement(query);
+			}catch(SQLException e) {
 
-			for (EntityAccessorio accessorio_optional : noleggio.getAccessoriOptional()) {
+				assertTrue(false);
 
-				stmt.setInt(1, idNoleggio);
-				stmt.setInt(2, accessorio_optional.getId());
+			}finally {
 
-				stmt.executeUpdate();
-					
+				conn.close();
+
 			}
 
-		}catch(SQLException e) {
+		}catch(SQLException e){
 
-			throw new DAOException("Errore lettura proiezione");
-
-		}finally {
-
-			DBManager.closeConnection();
+			assertTrue(false);
 
 		}
-
-        String actual = os.toString().substring(os.toString().indexOf("Imbarcazioni disponibili:"), os.toString().indexOf("Premere [ENTER] per tornare al menu..."));
-
-        assertEquals(out, actual);
 
         System.setIn(input_bak);
         System.setOut(output_bak);
 
     }
+
+	@Test
+	public void patenteTrueSceltaN(){
+
+		InputStream input_bak = System.in;
+        PrintStream output_bak = System.out;
+
+        System.setIn(new ByteArrayInputStream("4\n2\n3\n2024-08-01\n2024-09-01\n1\n1 4\n1\nmariorossi@gmail.com\npippo2002\nn\ns\n1234567812345678\n5\n".getBytes()));
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream output = new PrintStream(os);
+
+        System.setOut(output);
+
+        BoundaryCliente.main(new String[]{});
+
+		try{
+
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/nolejava", "root", "root");
+
+			try {
+
+				String query = "SELECT SKIPPER FROM NOLEGGIO WHERE DATA_INIZIO=? AND DATA_FINE=?;";
+
+				PreparedStatement stmt = conn.prepareStatement(query);
+
+				stmt.setDate(1, Date.valueOf("2024-08-01"));
+				stmt.setDate(2, Date.valueOf("2024-09-01"));
+
+				ResultSet result = stmt.executeQuery();
+				
+				if(result.next()){
+
+					boolean c = result.getBoolean(1);
+
+					assertFalse(c);
+
+				}
+
+			}catch(SQLException e) {
+
+				assertTrue(false);
+
+			}finally {
+
+				conn.close();
+
+			}
+
+		}catch(SQLException e){
+
+			assertTrue(false);
+
+		}
+
+        System.setIn(input_bak);
+        System.setOut(output_bak);
+
+	}
+
+	@Test
+	public void patenteTrueSceltaNonValida(){
+
+		InputStream input_bak = System.in;
+        PrintStream output_bak = System.out;
+
+		String out = "[!] Errore: Input non valido... Riprovare";
+
+        System.setIn(new ByteArrayInputStream("4\n2\n3\n2024-10-01\n2024-11-01\n1\n1 4\n1\nmariorossi@gmail.com\npippo2002\na\ns\nn\n5\n".getBytes()));
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream output = new PrintStream(os);
+
+        System.setOut(output);
+
+        BoundaryCliente.main(new String[]{});
+
+		String actual = os.toString();
+
+		assertTrue(actual.contains(out));
+
+        System.setIn(input_bak);
+        System.setOut(output_bak);
+
+	}
+
+	@Test
+	public void patenteFalse(){
+
+		InputStream input_bak = System.in;
+        PrintStream output_bak = System.out;
+
+        System.setIn(new ByteArrayInputStream("4\n1\n3\n2024-09-01\n2024-10-01\n1\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\ns\n1234567812345678\n5\n".getBytes()));
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream output = new PrintStream(os);
+
+        System.setOut(output);
+
+        BoundaryCliente.main(new String[]{});
+
+		try{
+
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/nolejava", "root", "root");
+
+			try {
+
+				String query = "SELECT SKIPPER FROM NOLEGGIO WHERE DATA_INIZIO=? AND DATA_FINE=?;";
+
+				PreparedStatement stmt = conn.prepareStatement(query);
+
+				stmt.setDate(1, Date.valueOf("2024-08-01"));
+				stmt.setDate(2, Date.valueOf("2024-09-01"));
+
+				ResultSet result = stmt.executeQuery();
+				
+				if(result.next()){
+
+					boolean c = result.getBoolean(1);
+
+					assertFalse(c);
+
+				}
+
+			}catch(SQLException e) {
+
+				assertTrue(false);
+
+			}finally {
+
+				conn.close();
+
+			}
+
+		}catch(SQLException e){
+
+			assertTrue(false);
+
+		}
+
+        System.setIn(input_bak);
+        System.setOut(output_bak);
+
+	}
 
 }
