@@ -60,12 +60,19 @@ INSERT INTO IMBARCAZIONE VALUES ('NA123', 'La Bellissima', 'vela', 'IN USO', 4, 
 INSERT INTO IMBARCAZIONE VALUES ('PA123', 'Amanda', 'motore', 'IN USO', 6, 50 );
 
 INSERT INTO ACCESSORIO_OBBLIGATORIO VALUES (NULL, 'servizio assicurativo', 'servizio assicurativo descrizione', 50);
-INSERT INTO ACCESSORIO_OPTIONAL VALUES (NULL, 'motore tender', 'motore tender descrizione', 30);
+INSERT INTO ACCESSORIO_OPTIONAL VALUES (NULL, 'scaletta', 'scaletta per salire o scendere', 30);
 
 INSERT INTO ACCESSORIO_OBBLIGATORIO VALUES (NULL, 'servizio assicurativo 2', 'servizio assicurativo 2 descrizione', 50);
-INSERT INTO ACCESSORIO_OPTIONAL VALUES (NULL, 'motore tender 2', 'motore tender 2 descrizione', 30);
+INSERT INTO ACCESSORIO_OPTIONAL VALUES (NULL, 'scivolo', 'scivolo per salire', 30);
 
 INSERT INTO NOLEGGIO VALUES (NULL, '2024-02-10', '2024-02-20', 1, 'PA123', 1, TRUE);
+
+INSERT INTO NOLEGGIO VALUES (NULL, '2025-03-01', '2025-04-01', 1, 'PA123', 1, TRUE);
+INSERT INTO NOLEGGIO VALUES (NULL, '2025-04-01', '2025-05-01', 1, 'PA123', 1, TRUE);
+
+INSERT INTO NOLEGGIO VALUES (NULL, '2025-03-01', '2025-04-01', 1, 'NA123', 1, TRUE);
+INSERT INTO NOLEGGIO VALUES (NULL, '2025-04-01', '2025-05-01', 1, 'NA123', 1, TRUE);
+
 
 
 
