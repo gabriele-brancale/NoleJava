@@ -103,7 +103,7 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore: Devi selezionare almeno un accessorio obbligatorio... Riprovare";   
+        out = "[!] Errore: Input non valido, selezionare almeno un accessorio obbligatorio... Riprovare";   
 
         System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n3 4\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 
@@ -131,7 +131,7 @@ public class SceltaAccessoriTest {
 
         String out;
         
-        out = "[!] Errore: Input non valido, piu' di un obbligatorio selezionato... Riprovare";   
+        out = "[!] Errore: Input non valido, è possibile scegliere un solo accessorio obbligatorio... Riprovare";   
 
         System.setIn(new ByteArrayInputStream("4\n1\n3\n2025-01-01\n2025-02-01\n1\n1 2\n1 4\n1\nrobertomengoni@gmail.com\npippo2004\nn\n5\n".getBytes()));   
 

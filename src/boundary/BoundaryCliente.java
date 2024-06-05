@@ -2,9 +2,9 @@ package boundary;
 
 
 import java.sql.Date;
-
+import java.time.Duration;
 import java.time.LocalDate;
-
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -27,6 +27,7 @@ public class BoundaryCliente {
 
 	private static Date dataInizio;
 	private static Date dataFine;
+	private static int numeroPassegeri;
 
 	private static boolean accesso;
 	
@@ -362,6 +363,8 @@ public class BoundaryCliente {
 				System.out.print("\033[14;0H\033[0J");
 				System.out.println("Inserire gli accessori separando ogni valore con uno spazio: " + "\u001B[34m" + listaAccessori.stream().map(a -> a.getNome()).collect(Collectors.joining(" ")));
 
+				boolean postoSkipper = (imbarcazioneScelta.getCapienza() - numeroPassegeri) >= 1;
+
 				if(accesso == false){
 
 					System.out.println("\u001B[33m" + "[#] Attenzione: Non e' stato effettuato l'accesso, per continuare e' necessario un account: " + "\u001B[0m");
@@ -430,31 +433,47 @@ public class BoundaryCliente {
 
 				if(gC.verificaPatente()){
 
-					while(true){
+					if(postoSkipper){
 
-						System.out.print("Si desidera uno skipper? (avra' un costo aggiuntivo di 50euro al giorno) [s/n]: " + "\u001B[34m");
+						while(true){
 
-						String opt = scan.nextLine();
-
-						System.out.print("\u001B[0m");
-
-						opt = opt.toLowerCase();
-
-						if(opt.equals("n")){
-
-							skipper = false;
-
-						}else if(!opt.equals("s")){
-
-							System.out.print("\033[K");
-							System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare." + "\u001B[0m");
-							System.out.print("\033[F\033[K");
-
-							continue;
-
+							System.out.print("Si desidera uno skipper? (avra' un costo aggiuntivo di 50euro al giorno) [s/n]: " + "\u001B[34m");
+	
+							String opt = scan.nextLine();
+	
+							System.out.print("\u001B[0m");
+	
+							opt = opt.toLowerCase();
+	
+							if(opt.equals("n")){
+	
+								skipper = false;
+	
+							}else if(!opt.equals("s")){
+	
+								System.out.print("\033[K");
+								System.out.print("\u001B[31m" + "[!] Errore: Input non valido... Riprovare." + "\u001B[0m");
+								System.out.print("\033[F\033[K");
+	
+								continue;
+	
+							}
+	
+							break;
+						
 						}
 
-						break;
+					}{
+
+						System.out.println("\u001B[33m" + "[#] Attenzione: Non e' stato chiesto se aggiungere uno skipper poiche' non ci sono altri posti disponibili per la barca selezionata" + "\u001B[0m");
+
+					}
+
+				}else{
+
+					if(!postoSkipper){
+
+						throw new OperationException("\u001B[33m" + "[#] Attenzione: Siccome non si dispone di patente, non ci sono posti sufficienti anche per lo skipper");
 					
 					}
 
@@ -547,7 +566,6 @@ public class BoundaryCliente {
 		GestioneNoleggio gN = GestioneNoleggio.getInstance();
 		ArrayList<EntityImbarcazione> risultato;
 		String tipologia = null;
-		int numeroPassegeri;
 
 		System.out.print("\u001B[32m");
 		System.out.println(" ╔═══════════════╗");
@@ -744,9 +762,7 @@ public class BoundaryCliente {
 
 				System.out.print("\u001B[0m");
 
-				// controllare anche la lunghezza
-
-				if(email.contains("@") && email.contains(".")){		// altrimenti utilizzare l'espressione regolare  /^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/
+				if(email.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\\.[a-zA-Z0-9]{2,8}$") && email.length() <= 254){		// altrimenti utilizzare l'espressione regolare  /^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/
 
 					break;
 
@@ -771,9 +787,7 @@ public class BoundaryCliente {
 
 				System.out.print("\u001B[0m");
 
-				// controllare la lunghezza
-
-				if(true /* lunghezza giusta */){
+				if(password.length() >= 8 && password.length() <= 20){
 
 					break;
 
@@ -837,7 +851,7 @@ public class BoundaryCliente {
 
 				System.out.print("\u001B[0m");
 
-				if(nome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
+				if(nome.matches("[a-zA-Z]+") && nome.length() <= 50){
 
 					break;
 
@@ -861,7 +875,7 @@ public class BoundaryCliente {
 
 				System.out.print("\u001B[0m");
 
-				if(cognome.matches("[a-zA-Z]+") /* && controllare lunghezza */){
+				if(cognome.matches("[a-zA-Z]+") && cognome.length() <= 50){
 
 					break;
 
@@ -885,9 +899,7 @@ public class BoundaryCliente {
 
 				System.out.print("\u001B[0m");
 
-				// controllare anche la lunghezza
-
-				if(email.contains("@") && email.contains(".")){		// altrimenti utilizzare l'espressione regolare  /^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/
+				if(email.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+\\.[a-zA-Z0-9]{2,8}$") && email.length() <= 254){		// altrimenti utilizzare l'espressione regolare  /^[a-zA-Z0-9. _%+-]+@[a-zA-Z0-9. -]+\\. [a-zA-Z]{2,}$/
 
 					break;
 
@@ -911,9 +923,7 @@ public class BoundaryCliente {
 
 				System.out.print("\u001B[0m");
 
-				// controllare la lunghezza
-
-				if(true /* lunghezza giusta */){
+				if(password.length() >= 8 && password.length() <= 20){
 
 					break;
 
@@ -932,6 +942,17 @@ public class BoundaryCliente {
 					dataDiNascita = Date.valueOf(scan.nextLine());
 
 					System.out.print("\u001B[0m");
+
+					long anni = ChronoUnit.YEARS.between(LocalDate.parse(dataDiNascita.toString()), LocalDate.now());
+
+					if(anni < 18){
+
+						System.out.print("\033[K");
+						System.out.print("\u001B[31m" + "[!] Errore: Input non valido, bisogna avere almeno 18 anni per registrarsi... Riprovare" + "\u001B[0m");
+						System.out.print("\033[F\033[K" + "\033[17;0H");
+						continue;
+
+					}
 
 					break;
 
