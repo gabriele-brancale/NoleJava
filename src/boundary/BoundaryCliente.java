@@ -182,6 +182,7 @@ public class BoundaryCliente {
 		EntityImbarcazione imbarcazioneScelta;
 		ArrayList<EntityAccessorio> listaAccessori;
 		boolean skipper = true;
+		Thread caricamento;
 
 		try {
 
@@ -515,11 +516,46 @@ public class BoundaryCliente {
 
 						}
 
-						System.out.println("[#] Info: Pagamento in corso...");
+						caricamento = new Thread(() -> {
+
+							while(true){
+	
+								System.out.print("\033[2K\033[0G");
+								System.out.print("\u001B[33m" + "[#] Info: Pagamento in corso." + "\u001B[0m");
+	
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									break;
+								}
+	
+								System.out.print("\033[2K\033[0G");
+								System.out.print("\u001B[33m" + "[#] Info: Pagamento in corso.." + "\u001B[0m");
+	
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									break;
+								}
+	
+								System.out.print("\033[2K\033[0G");
+								System.out.print("\u001B[33m" + "[#] Info: Pagamento in corso..." + "\u001B[0m");
+	
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									break;
+								}
+	
+							}
+	
+						});
+						caricamento.start();
 
 						if(gN.effettuaPagamento(numeroCarta)){
 
-							System.out.println("[#] Info: Pagamento effettuato");
+							caricamento.interrupt();
+							throw new OperationException("\u001B[32m" + "[#] Info: Pagamento effettuato");
 
 						}else{
 
