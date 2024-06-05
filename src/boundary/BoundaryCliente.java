@@ -2,7 +2,6 @@ package boundary;
 
 
 import java.sql.Date;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -463,7 +462,10 @@ public class BoundaryCliente {
 						
 						}
 
-					}{
+					}
+					else{
+
+						skipper = false;
 
 						System.out.println("\u001B[33m" + "[#] Attenzione: Non e' stato chiesto se aggiungere uno skipper poiche' non ci sono altri posti disponibili per la barca selezionata" + "\u001B[0m");
 
@@ -801,7 +803,6 @@ public class BoundaryCliente {
 
 				if(accesso == true){
 
-					//System.out.println("[#] Info: Login effettuato");
 					System.out.print("\033[7;0H");
 					System.out.print("\u001B[32m" + " Login effettuato" + "\u001B[0m");
 		
@@ -982,6 +983,8 @@ public class BoundaryCliente {
 
 					while(true){
 
+						System.out.print("\033[K");
+
 						System.out.print("Inserire il numero di patente: " + "\u001B[34m");
 		
 						numeroPatente = scan.nextLine().toUpperCase();
@@ -1084,7 +1087,9 @@ public class BoundaryCliente {
 
 				}else{
 
-					System.out.println("[!] Errore: Input non valido... Riprovare");
+					System.out.print("\033[K");
+					System.out.print("\u001B[31m" + "[!] Errore: Input non valido, inserire o 's' o 'n'... Riprovare." + "\u001B[0m");
+					System.out.print("\033[F\033[K" + "\033[18;0H");
 
 				}
 
@@ -1096,13 +1101,11 @@ public class BoundaryCliente {
 
 					accesso = true;
 
-					break;
+					throw new OperationException("\u001B[32m" + "[*] Registrazione effettuata con successo");
 
 				}else{
 
-					caricamento.interrupt();
-
-					System.out.println("[#] Attenzione: Esiste gia' un account con questa email... Riprovare");
+					throw new OperationException("\u001B[33m" + "[#] Attenzione: Esiste gia' un account con questa email... Riprovare");
 
 				}
 
@@ -1110,7 +1113,7 @@ public class BoundaryCliente {
 
 				caricamento.interrupt();
 
-				throw new OperationException("\u001B[31m" + "[!] Errore: Operazione fallita");
+				throw e;
 
 			}
 

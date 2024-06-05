@@ -49,11 +49,11 @@ public class GestioneClienti {
 
         }catch(DBConnectionException e){
 
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Riscontrato un problema interno");
 
 		}catch(DAOException e){
 
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Impossibile trovare i dati necessari");
 
 		}
 
@@ -81,11 +81,11 @@ public class GestioneClienti {
 
         }catch(DBConnectionException e){
 
-			throw new OperationException("[!] Errore: Riscontrato un problema interno");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Riscontrato un problema interno");
 
 		}catch(DAOException e){
 
-			throw new OperationException("[!] Errore: Impossibile trovare i dati necessari");
+			throw new OperationException("\u001B[31m" + "[!] Errore: Impossibile trovare i dati necessari");
 
 		}
 

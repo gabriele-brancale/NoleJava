@@ -61,7 +61,7 @@ public class ClienteRegistratoDAO {
 
 			Connection conn = DBManager.getConnection();
 
-			String query = "INSERT INTO CLIENTE_REGISTRATO VALUES (?, ?, ?, ?, ?, ?);";
+			String query = "INSERT INTO CLIENTE_REGISTRATO VALUES (NULL, ?, ?, ?, ?, ?, ?);";
 
 			try {
 
@@ -76,13 +76,13 @@ public class ClienteRegistratoDAO {
 
 				stmt.executeUpdate();
 
-				stmt = conn.prepareStatement("LAST_INSERT_ID()");
+				stmt = conn.prepareStatement("SELECT LAST_INSERT_ID()");
 
 				ResultSet result = stmt.executeQuery();
 
 				result.next();
 
-				return new EntityClienteRegistrato(result.getInt(0), nome, cognome, email, password, dataDiNascita, numeroPatente);
+				return new EntityClienteRegistrato(result.getInt(1), nome, cognome, email, password, dataDiNascita, numeroPatente);
 
 			}catch(SQLException e) {
 
