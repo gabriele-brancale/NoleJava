@@ -1,6 +1,8 @@
-package boundary;
+package test;
 
 import org.junit.Test;
+
+import boundary.BoundaryCliente;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

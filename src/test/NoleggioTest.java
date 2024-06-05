@@ -1,4 +1,4 @@
-package boundary;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,6 +17,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 import org.junit.Test;
+
+import boundary.BoundaryCliente;
 
 public class NoleggioTest {
 

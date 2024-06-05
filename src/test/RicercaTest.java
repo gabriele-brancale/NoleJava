@@ -1,4 +1,4 @@
-package boundary;
+package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 import org.junit.Test;
+
+import boundary.BoundaryCliente;
 
 public class RicercaTest {
 

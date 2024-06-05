@@ -24,7 +24,6 @@ public class DBManager {
 
 				}
 
-				//conn = DriverManager.getConnection("jdbc:h2:./gestioneCinema", "sa", "");
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/nolejava", "root", "root");
 
 			}
